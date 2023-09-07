@@ -17,7 +17,7 @@ struct SignUpPageView: View {
             VStack {
                 Form {
                     HStack{
-                        TextField("Enter your username",text: $username)
+                        TextField("Enter  username",text: $username)
                     }
                 }
                 Button("Continue"){
