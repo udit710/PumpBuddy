@@ -1,0 +1,716 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		542956522A95FE9B007C9658 /* CustomWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542956512A95FE9B007C9658 /* CustomWorkoutView.swift */; };
+		DD09CB5C2A811B2A0016769A /* PumpBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB5B2A811B2A0016769A /* PumpBuddyApp.swift */; };
+		DD09CB5E2A811B2A0016769A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB5D2A811B2A0016769A /* ContentView.swift */; };
+		DD09CB602A811B2B0016769A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD09CB5F2A811B2B0016769A /* Assets.xcassets */; };
+		DD09CB632A811B2B0016769A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD09CB622A811B2B0016769A /* Preview Assets.xcassets */; };
+		DD09CB6D2A811B2B0016769A /* PumpBuddyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB6C2A811B2B0016769A /* PumpBuddyTests.swift */; };
+		DD09CB772A811B2B0016769A /* PumpBuddyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB762A811B2B0016769A /* PumpBuddyUITests.swift */; };
+		DD09CB792A811B2B0016769A /* PumpBuddyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB782A811B2B0016769A /* PumpBuddyUITestsLaunchTests.swift */; };
+		DD09CB892A8123DA0016769A /* IntroPage1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB882A8123DA0016769A /* IntroPage1View.swift */; };
+		DD3515A82A99A2EE00509143 /* SearchExercises.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3515A72A99A2EE00509143 /* SearchExercises.swift */; };
+		DD837B172A946A9200C10CDC /* SignUpPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B162A946A9200C10CDC /* SignUpPageView.swift */; };
+		DD837B1A2A94781600C10CDC /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B192A94781600C10CDC /* Workout.swift */; };
+		DD837B1C2A94794400C10CDC /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B1B2A94794400C10CDC /* Exercise.swift */; };
+		DD837B1E2A94796100C10CDC /* MuscleGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B1D2A94796100C10CDC /* MuscleGroup.swift */; };
+		DD837B202A947E0200C10CDC /* WorkoutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B1F2A947E0200C10CDC /* WorkoutTabView.swift */; };
+		DD837B222A947E7200C10CDC /* AccountTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B212A947E7200C10CDC /* AccountTabView.swift */; };
+		DD837B272A9489A900C10CDC /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B262A9489A900C10CDC /* WeekView.swift */; };
+		DD837B292A9489E300C10CDC /* WorkoutsBriefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B282A9489E300C10CDC /* WorkoutsBriefView.swift */; };
+		DD837B2B2A9489FC00C10CDC /* ExploreOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B2A2A9489FC00C10CDC /* ExploreOverview.swift */; };
+		DD837B2D2A949DF200C10CDC /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD837B2C2A949DF200C10CDC /* WorkoutHistoryView.swift */; };
+		DDBB23C12A99CC7600F6A66B /* ExplorePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBB23C02A99CC7600F6A66B /* ExplorePageView.swift */; };
+		DDE9CA8C2A86086A008B4BC5 /* LoadPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE9CA8B2A86086A008B4BC5 /* LoadPageView.swift */; };
+		DDEF9EA32A89ED1A0071B30C /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEF9EA22A89ED1A0071B30C /* HomePageView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DD09CB692A811B2B0016769A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD09CB502A811B2A0016769A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD09CB572A811B2A0016769A;
+			remoteInfo = PumpBuddy;
+		};
+		DD09CB732A811B2B0016769A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD09CB502A811B2A0016769A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD09CB572A811B2A0016769A;
+			remoteInfo = PumpBuddy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		542956512A95FE9B007C9658 /* CustomWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWorkoutView.swift; sourceTree = "<group>"; };
+		DD09CB582A811B2A0016769A /* PumpBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PumpBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD09CB5B2A811B2A0016769A /* PumpBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpBuddyApp.swift; sourceTree = "<group>"; };
+		DD09CB5D2A811B2A0016769A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DD09CB5F2A811B2B0016769A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DD09CB622A811B2B0016769A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DD09CB682A811B2B0016769A /* PumpBuddyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PumpBuddyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD09CB6C2A811B2B0016769A /* PumpBuddyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpBuddyTests.swift; sourceTree = "<group>"; };
+		DD09CB722A811B2B0016769A /* PumpBuddyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PumpBuddyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD09CB762A811B2B0016769A /* PumpBuddyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpBuddyUITests.swift; sourceTree = "<group>"; };
+		DD09CB782A811B2B0016769A /* PumpBuddyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpBuddyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DD09CB882A8123DA0016769A /* IntroPage1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroPage1View.swift; sourceTree = "<group>"; };
+		DD3515A72A99A2EE00509143 /* SearchExercises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchExercises.swift; sourceTree = "<group>"; };
+		DD837B162A946A9200C10CDC /* SignUpPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageView.swift; sourceTree = "<group>"; };
+		DD837B192A94781600C10CDC /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		DD837B1B2A94794400C10CDC /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		DD837B1D2A94796100C10CDC /* MuscleGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleGroup.swift; sourceTree = "<group>"; };
+		DD837B1F2A947E0200C10CDC /* WorkoutTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTabView.swift; sourceTree = "<group>"; };
+		DD837B212A947E7200C10CDC /* AccountTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTabView.swift; sourceTree = "<group>"; };
+		DD837B262A9489A900C10CDC /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
+		DD837B282A9489E300C10CDC /* WorkoutsBriefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsBriefView.swift; sourceTree = "<group>"; };
+		DD837B2A2A9489FC00C10CDC /* ExploreOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreOverview.swift; sourceTree = "<group>"; };
+		DD837B2C2A949DF200C10CDC /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
+		DDBB23C02A99CC7600F6A66B /* ExplorePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePageView.swift; sourceTree = "<group>"; };
+		DDE9CA8B2A86086A008B4BC5 /* LoadPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPageView.swift; sourceTree = "<group>"; };
+		DDEF9EA22A89ED1A0071B30C /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD09CB552A811B2A0016769A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD09CB652A811B2B0016769A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD09CB6F2A811B2B0016769A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DD09CB4F2A811B2A0016769A = {
+			isa = PBXGroup;
+			children = (
+				DD09CB5A2A811B2A0016769A /* PumpBuddy */,
+				DD09CB6B2A811B2B0016769A /* PumpBuddyTests */,
+				DD09CB752A811B2B0016769A /* PumpBuddyUITests */,
+				DD09CB592A811B2A0016769A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DD09CB592A811B2A0016769A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD09CB582A811B2A0016769A /* PumpBuddy.app */,
+				DD09CB682A811B2B0016769A /* PumpBuddyTests.xctest */,
+				DD09CB722A811B2B0016769A /* PumpBuddyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DD09CB5A2A811B2A0016769A /* PumpBuddy */ = {
+			isa = PBXGroup;
+			children = (
+				DD09CB5B2A811B2A0016769A /* PumpBuddyApp.swift */,
+				DD837B182A9477FB00C10CDC /* Model */,
+				DDC720B42A9469D8009B03A0 /* Views */,
+				DDEC0D8C2A9B756B0046ADC3 /* ViewModel */,
+				DD09CB5F2A811B2B0016769A /* Assets.xcassets */,
+				DD09CB612A811B2B0016769A /* Preview Content */,
+			);
+			path = PumpBuddy;
+			sourceTree = "<group>";
+		};
+		DD09CB612A811B2B0016769A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DD09CB622A811B2B0016769A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DD09CB6B2A811B2B0016769A /* PumpBuddyTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD09CB6C2A811B2B0016769A /* PumpBuddyTests.swift */,
+			);
+			path = PumpBuddyTests;
+			sourceTree = "<group>";
+		};
+		DD09CB752A811B2B0016769A /* PumpBuddyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DD09CB762A811B2B0016769A /* PumpBuddyUITests.swift */,
+				DD09CB782A811B2B0016769A /* PumpBuddyUITestsLaunchTests.swift */,
+			);
+			path = PumpBuddyUITests;
+			sourceTree = "<group>";
+		};
+		DD09CB872A8123880016769A /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				DD09CB882A8123DA0016769A /* IntroPage1View.swift */,
+				DDE9CA8B2A86086A008B4BC5 /* LoadPageView.swift */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
+		DD3515A62A99827500509143 /* WorkoutSubViews */ = {
+			isa = PBXGroup;
+			children = (
+				542956512A95FE9B007C9658 /* CustomWorkoutView.swift */,
+				DD3515A72A99A2EE00509143 /* SearchExercises.swift */,
+			);
+			path = WorkoutSubViews;
+			sourceTree = "<group>";
+		};
+		DD837B182A9477FB00C10CDC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DD837B192A94781600C10CDC /* Workout.swift */,
+				DD837B1B2A94794400C10CDC /* Exercise.swift */,
+				DD837B1D2A94796100C10CDC /* MuscleGroup.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DD837B252A94898E00C10CDC /* HomeSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				DD837B262A9489A900C10CDC /* WeekView.swift */,
+				DD837B282A9489E300C10CDC /* WorkoutsBriefView.swift */,
+				DD837B2C2A949DF200C10CDC /* WorkoutHistoryView.swift */,
+				DDBB23C02A99CC7600F6A66B /* ExplorePageView.swift */,
+				DD837B2A2A9489FC00C10CDC /* ExploreOverview.swift */,
+			);
+			path = HomeSubviews;
+			sourceTree = "<group>";
+		};
+		DDC720B42A9469D8009B03A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DD09CB5D2A811B2A0016769A /* ContentView.swift */,
+				DDE9CA8D2A861461008B4BC5 /* Login */,
+				DD09CB872A8123880016769A /* Intro */,
+				DDEF9EA12A89ECFC0071B30C /* MainViews */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DDE9CA8D2A861461008B4BC5 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				DD837B162A946A9200C10CDC /* SignUpPageView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		DDEC0D8C2A9B756B0046ADC3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DDEF9EA12A89ECFC0071B30C /* MainViews */ = {
+			isa = PBXGroup;
+			children = (
+				DDEF9EA22A89ED1A0071B30C /* HomePageView.swift */,
+				DD837B1F2A947E0200C10CDC /* WorkoutTabView.swift */,
+				DD837B212A947E7200C10CDC /* AccountTabView.swift */,
+				DD837B252A94898E00C10CDC /* HomeSubviews */,
+				DD3515A62A99827500509143 /* WorkoutSubViews */,
+			);
+			path = MainViews;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DD09CB572A811B2A0016769A /* PumpBuddy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD09CB7C2A811B2B0016769A /* Build configuration list for PBXNativeTarget "PumpBuddy" */;
+			buildPhases = (
+				DD09CB542A811B2A0016769A /* Sources */,
+				DD09CB552A811B2A0016769A /* Frameworks */,
+				DD09CB562A811B2A0016769A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PumpBuddy;
+			productName = PumpBuddy;
+			productReference = DD09CB582A811B2A0016769A /* PumpBuddy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DD09CB672A811B2B0016769A /* PumpBuddyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD09CB7F2A811B2B0016769A /* Build configuration list for PBXNativeTarget "PumpBuddyTests" */;
+			buildPhases = (
+				DD09CB642A811B2B0016769A /* Sources */,
+				DD09CB652A811B2B0016769A /* Frameworks */,
+				DD09CB662A811B2B0016769A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD09CB6A2A811B2B0016769A /* PBXTargetDependency */,
+			);
+			name = PumpBuddyTests;
+			productName = PumpBuddyTests;
+			productReference = DD09CB682A811B2B0016769A /* PumpBuddyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DD09CB712A811B2B0016769A /* PumpBuddyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD09CB822A811B2B0016769A /* Build configuration list for PBXNativeTarget "PumpBuddyUITests" */;
+			buildPhases = (
+				DD09CB6E2A811B2B0016769A /* Sources */,
+				DD09CB6F2A811B2B0016769A /* Frameworks */,
+				DD09CB702A811B2B0016769A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD09CB742A811B2B0016769A /* PBXTargetDependency */,
+			);
+			name = PumpBuddyUITests;
+			productName = PumpBuddyUITests;
+			productReference = DD09CB722A811B2B0016769A /* PumpBuddyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DD09CB502A811B2A0016769A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					DD09CB572A811B2A0016769A = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					DD09CB672A811B2B0016769A = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = DD09CB572A811B2A0016769A;
+					};
+					DD09CB712A811B2B0016769A = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = DD09CB572A811B2A0016769A;
+					};
+				};
+			};
+			buildConfigurationList = DD09CB532A811B2A0016769A /* Build configuration list for PBXProject "PumpBuddy" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DD09CB4F2A811B2A0016769A;
+			productRefGroup = DD09CB592A811B2A0016769A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DD09CB572A811B2A0016769A /* PumpBuddy */,
+				DD09CB672A811B2B0016769A /* PumpBuddyTests */,
+				DD09CB712A811B2B0016769A /* PumpBuddyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DD09CB562A811B2A0016769A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD09CB632A811B2B0016769A /* Preview Assets.xcassets in Resources */,
+				DD09CB602A811B2B0016769A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD09CB662A811B2B0016769A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD09CB702A811B2B0016769A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DD09CB542A811B2A0016769A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD837B272A9489A900C10CDC /* WeekView.swift in Sources */,
+				DD837B172A946A9200C10CDC /* SignUpPageView.swift in Sources */,
+				DD837B1C2A94794400C10CDC /* Exercise.swift in Sources */,
+				542956522A95FE9B007C9658 /* CustomWorkoutView.swift in Sources */,
+				DD837B202A947E0200C10CDC /* WorkoutTabView.swift in Sources */,
+				DD837B2D2A949DF200C10CDC /* WorkoutHistoryView.swift in Sources */,
+				DD09CB5E2A811B2A0016769A /* ContentView.swift in Sources */,
+				DD3515A82A99A2EE00509143 /* SearchExercises.swift in Sources */,
+				DD837B1A2A94781600C10CDC /* Workout.swift in Sources */,
+				DD837B222A947E7200C10CDC /* AccountTabView.swift in Sources */,
+				DD837B292A9489E300C10CDC /* WorkoutsBriefView.swift in Sources */,
+				DDE9CA8C2A86086A008B4BC5 /* LoadPageView.swift in Sources */,
+				DD09CB5C2A811B2A0016769A /* PumpBuddyApp.swift in Sources */,
+				DD09CB892A8123DA0016769A /* IntroPage1View.swift in Sources */,
+				DDEF9EA32A89ED1A0071B30C /* HomePageView.swift in Sources */,
+				DD837B2B2A9489FC00C10CDC /* ExploreOverview.swift in Sources */,
+				DD837B1E2A94796100C10CDC /* MuscleGroup.swift in Sources */,
+				DDBB23C12A99CC7600F6A66B /* ExplorePageView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD09CB642A811B2B0016769A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD09CB6D2A811B2B0016769A /* PumpBuddyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD09CB6E2A811B2B0016769A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD09CB772A811B2B0016769A /* PumpBuddyUITests.swift in Sources */,
+				DD09CB792A811B2B0016769A /* PumpBuddyUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DD09CB6A2A811B2B0016769A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD09CB572A811B2A0016769A /* PumpBuddy */;
+			targetProxy = DD09CB692A811B2B0016769A /* PBXContainerItemProxy */;
+		};
+		DD09CB742A811B2B0016769A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD09CB572A811B2A0016769A /* PumpBuddy */;
+			targetProxy = DD09CB732A811B2B0016769A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		DD09CB7A2A811B2B0016769A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DD09CB7B2A811B2B0016769A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DD09CB7D2A811B2B0016769A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PumpBuddy/Preview Content\"";
+				DEVELOPMENT_TEAM = 95FXT4S7UK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = co.UditMalshe.PumpBuddy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DD09CB7E2A811B2B0016769A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PumpBuddy/Preview Content\"";
+				DEVELOPMENT_TEAM = 95FXT4S7UK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = co.UditMalshe.PumpBuddy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DD09CB802A811B2B0016769A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 95FXT4S7UK;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = co.UditMalshe.PumpBuddyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PumpBuddy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PumpBuddy";
+			};
+			name = Debug;
+		};
+		DD09CB812A811B2B0016769A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 95FXT4S7UK;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = co.UditMalshe.PumpBuddyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PumpBuddy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PumpBuddy";
+			};
+			name = Release;
+		};
+		DD09CB832A811B2B0016769A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 95FXT4S7UK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = co.UditMalshe.PumpBuddyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PumpBuddy;
+			};
+			name = Debug;
+		};
+		DD09CB842A811B2B0016769A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 95FXT4S7UK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = co.UditMalshe.PumpBuddyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PumpBuddy;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DD09CB532A811B2A0016769A /* Build configuration list for PBXProject "PumpBuddy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD09CB7A2A811B2B0016769A /* Debug */,
+				DD09CB7B2A811B2B0016769A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD09CB7C2A811B2B0016769A /* Build configuration list for PBXNativeTarget "PumpBuddy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD09CB7D2A811B2B0016769A /* Debug */,
+				DD09CB7E2A811B2B0016769A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD09CB7F2A811B2B0016769A /* Build configuration list for PBXNativeTarget "PumpBuddyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD09CB802A811B2B0016769A /* Debug */,
+				DD09CB812A811B2B0016769A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD09CB822A811B2B0016769A /* Build configuration list for PBXNativeTarget "PumpBuddyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD09CB832A811B2B0016769A /* Debug */,
+				DD09CB842A811B2B0016769A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DD09CB502A811B2A0016769A /* Project object */;
+}
