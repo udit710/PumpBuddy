@@ -17,20 +17,20 @@ struct ExplorePageView: View {
         VStack {
             if workoutSampleData.count == 0 {
                 List{
-                    ExploreCard(title: "Running", description: "Take a 2km jog.", imageSet: ["Running-explore"])
+                    ExploreCard(title: "Running", description: "Take a 2km jog.", setCount: 0, imageSet: ["Running-explore"])
                 }
             }else{
-                List(workoutSampleData){ workout in
+                List(workoutSampleData.reversed()){ workout in
                     //                let exe = workout.exercises?.allObjects as? [ExercisePerformed]
                     //                ExploreCard(title: workout.name ?? "Workout", description: exe?[0].exercise?.name ?? "none")
                     if let exe = workout.exercises?.allObjects as? [ExercisePerformed], !exe.isEmpty {
-                        ExploreCard(title: workout.name ?? "Workout", description: exe[0].exercise?.name ?? "none")
+                        ExploreCard(title: workout.name ?? "Workout", description: exe[0].exercise?.name ?? "none", setCount: exe[0].sets?.count ?? 0)
                     } else {
-                        ExploreCard(title: workout.name ?? "Workout", description: "No exercises")
+                        ExploreCard(title: workout.name ?? "Workout", description: "No exercises", setCount: 0)
                     }
                 }
             }
-                
+
             Button("Add"){
                 let workout = Workout(context: moc)
                 workout.id = UUID()
@@ -51,11 +51,11 @@ struct ExplorePageView: View {
                 thisEx.id = UUID()
                 thisEx.exercise = exercise
                 
-                let set1 = Set(context: moc)
-                set1.weight = 20
-                set1.id = UUID()
-                
-                thisEx.sets = [set1]
+//                let set1 = Set(context: moc)
+//                set1.weight = 20
+//                set1.id = UUID()
+//
+//                thisEx.sets = [set1]
                 
                 workout.exercises = [thisEx]
                 
@@ -81,6 +81,7 @@ struct ExplorePageView_Previews: PreviewProvider {
 struct ExploreCard: View{
     var title : String
     var description : String
+    var setCount: Int
     var imageSet: [String] = ["Running-explore", "Weights-explore", "HIIT-explore"]
     var body: some View{
         VStack(alignment: .leading) {
@@ -91,6 +92,7 @@ struct ExploreCard: View{
                 .font(.largeTitle)
                 .bold()
             Text(description)
+            Text("Sets: \(setCount)")
         }
         
     }
