@@ -57,19 +57,19 @@ struct HomeView: View{
                     WeekView() //Display weekview
                         .padding(.horizontal)
                     HStack{
-                        WorkoutsBriefView() //Display workoutsbriefview
-                            .padding(.leading)
-                            .frame(height: 200)
+////                        WorkoutsBriefView() //Display workoutsbriefview
+//                            .padding(.leading)
+//                            .frame(height: 200)
                             
                         NavigationLink{
-                            WorkoutHistoryView()//Navigate to workouthistory page
+//                            WorkoutHistoryView()//Navigate to workouthistory page
                         }label:{
-                            recentWorkouts()
-                                .background(colorScheme == .dark ? .white : .black)
-                                .foregroundColor(colorScheme == .dark ? .black : .white)
-                                .cornerRadius(20)
-                                .padding(.trailing)
-                                .frame(height: 200)
+////                            recentWorkouts()
+//                                .background(colorScheme == .dark ? .white : .black)
+//                                .foregroundColor(colorScheme == .dark ? .black : .white)
+//                                .cornerRadius(20)
+//                                .padding(.trailing)
+//                                .frame(height: 200)
                         }
                     }
                     

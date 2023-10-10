@@ -9,10 +9,15 @@ import SwiftUI
 //View to add a workout
 struct CustomWorkoutView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State private var workoutTitle = ""
-    @State private var selectedMuscle = chest.name.description
-    @State private var exerciseSelected: [MuscleGroup] = []
-    @State private var isWorkoutAdded = false
+    @Environment(\.managedObjectContext) var moc
+
+    @FetchRequest(entity: ExercisePerformed.entity(), sortDescriptors: []) var exercises: FetchedResults<ExercisePerformed>
+    @State var workoutTitle = ""
+    @State var selectedMuscle = "chest"
+//    @State private var exerciseSelected: [MuscleGroup] = []
+    @State var isWorkoutAdded = false
+    @State var excericesAdded : [ExercisePerformed] = []
+    @State var thisWorkout : Workout = Workout()
         
     var body: some View {
         NavigationStack{
@@ -26,10 +31,21 @@ struct CustomWorkoutView: View {
                     Spacer()
                     Spacer()
                     Spacer()
+                    Text("\(exercises.count)")
+                    List(exercises){e in
+//                        Text(e.)
+//                        HStack{
+                        if let ee = e.exercise{
+                            Text("\(ee.name ?? "No name")")
+                        }
+//                            Spacer()
+//                        }
+                    }
+                    
                     Spacer()
                     Spacer()
                     NavigationLink{
-                        SearchExercises()
+                        SearchExercises(exercisesAdded: $excericesAdded, thisWorkout: $thisWorkout)
                     }label: {
                         HStack {
                             Text("Add Exercise")
@@ -44,11 +60,11 @@ struct CustomWorkoutView: View {
                         
                     }
                     
-                    if isWorkoutAdded {
-                        Text("Workout Added!")
-                            .foregroundColor(.green)
-                            .padding(.top, 10)
-                    }
+//                    if isWorkoutAdded {
+//                        Text("Workout Added!")
+//                            .foregroundColor(.green)
+//                            .padding(.top, 10)
+//                    }
                 }
                 
                 .navigationTitle("Custom Workouts")
@@ -80,7 +96,7 @@ struct CustomWorkoutView: View {
     
     struct CustomWorkoutView_Previews: PreviewProvider {
         static var previews: some View {
-            CustomWorkoutView()
+            CustomWorkoutView(excericesAdded: [], thisWorkout: Workout())
         }
     }
     
