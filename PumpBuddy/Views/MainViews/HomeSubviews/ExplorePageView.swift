@@ -24,7 +24,12 @@ struct ExplorePageView: View {
                     //                let exe = workout.exercises?.allObjects as? [ExercisePerformed]
                     //                ExploreCard(title: workout.name ?? "Workout", description: exe?[0].exercise?.name ?? "none")
                     if let exe = workout.exercises?.allObjects as? [ExercisePerformed], !exe.isEmpty {
-                        ExploreCard(title: workout.name ?? "Workout", description: exe[0].exercise?.name ?? "none", setCount: exe[0].sets?.count ?? 0)
+                        if let ss = exe[0].sets?.allObjects as? [Set],
+                           !ss.isEmpty{
+                            ExploreCard(title: workout.name ?? "Workout", description: exe[0].exercise?.name ?? "none", setCount: Int(ss[0].weight))
+                        }else{
+                            ExploreCard(title: workout.name ?? "Workout", description: exe[0].exercise?.name ?? "none", setCount: exe[0].sets?.count ?? 0)
+                        }
                     } else {
                         ExploreCard(title: workout.name ?? "Workout", description: "No exercises", setCount: 0)
                     }

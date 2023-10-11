@@ -10,25 +10,29 @@ import SwiftUI
 
 struct WorkoutTabView: View {
     @Environment(\.colorScheme) var colorScheme
+    
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: Workout.entity(), sortDescriptors: []) var works: FetchedResults<Workout>
+    
     var body: some View {
         NavigationStack{
             ScrollView{
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Generate Workout")
-                        .bold()
-                        .foregroundColor(colorScheme == .dark ? .white : .accentColor)
-                    NavigationLink{
-                        //Empty till GenerateWorkoutView created
-                    } label: {
-                        ZStack{
-                            Text("Use Pump AI!")
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color("Pink"))
-                                .cornerRadius(20)
-                        }
-                    }
+//                    Text("Generate Workout")
+//                        .bold()
+//                        .foregroundColor(colorScheme == .dark ? .white : .accentColor)
+//                    NavigationLink{
+//                        //Empty till GenerateWorkoutView created
+//                    } label: {
+//                        ZStack{
+//                            Text("Use Pump AI!")
+//                                .foregroundColor(.white)
+//                                .padding()
+//                                .frame(maxWidth: .infinity)
+//                                .background(Color("Pink"))
+//                                .cornerRadius(20)
+//                        }
+//                    }
                     
                     Text("Create Workout")
                         .bold()
@@ -46,21 +50,21 @@ struct WorkoutTabView: View {
                         }
                     }
 
-                    Text("Start Workout")
-                        .bold()
-                        .foregroundColor(colorScheme == .dark ? .white : .accentColor)
-                    NavigationLink{
-                        //Empty till StartWorkoutView page created
-                    } label: {
-                        ZStack{
-                            Text("Begin New Workout")
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color("Pink"))
-                                .cornerRadius(20)
-                        }
-                    }
+//                    Text("Start Workout")
+//                        .bold()
+//                        .foregroundColor(colorScheme == .dark ? .white : .accentColor)
+//                    NavigationLink{
+//                        //Empty till StartWorkoutView page created
+//                    } label: {
+//                        ZStack{
+//                            Text("Begin New Workout")
+//                                .foregroundColor(.white)
+//                                .padding()
+//                                .frame(maxWidth: .infinity)
+//                                .background(Color("Pink"))
+//                                .cornerRadius(20)
+//                        }
+//                    }
                     
                     Text("My Workouts")
                         .bold()
