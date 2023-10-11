@@ -24,13 +24,13 @@ struct SearchExercises: View {
         return exercises.filter{$0.name!.localizedCaseInsensitiveContains(searchText)}
     }
     
-    func addToWorkout(thisWorkout: Workout){
-        thisWorkout.id = UUID()
-        thisWorkout.name = "na"
-        thisWorkout.date = Date()
-        thisWorkout.duration = 10
-        thisWorkout.exercises = NSSet(array: exercisesAdded)
-    }
+//    func addToWorkout(thisWorkout: Workout){
+//        thisWorkout.id = UUID()
+//        thisWorkout.name = "na"
+//        thisWorkout.date = Date()
+//        thisWorkout.duration = 10
+//        thisWorkout.exercises = NSSet(array: exercisesAdded)
+//    }
 
     var body: some View {
         NavigationStack{
@@ -39,33 +39,33 @@ struct SearchExercises: View {
                 }
                 .listStyle(.plain)
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search Exercises")
-            Button("Add"){
-                let exercise = Exercise(context: moc)
-                exercise.id=UUID()
-                exercise.name = "Bench Press"
-                exercise.muscles = "Chest"
-                exercise.type = "strength"
-                exercise.isFavourite = false
-                
-//                let thisWorkout = Workout(context: moc)
-//                thisWorkout.id = UUID()
-//                thisWorkout.name = "na"
-//                thisWorkout.date = Date()
-//                thisWorkout.duration = 10
-//                thisWorkout.exercises = NSSet(array: exercisesAdded)
-                
-                let exp = ExercisePerformed(context: moc)
-                exp.id = UUID()
-                
-//                addToWorkout(thisWorkout: thisWorkout)
-                
-//                exp.workout = thisWorkout
-                
-//                exercise.exercisePerformed = [exp]
-                
-                try? moc.save()
-                
-            }
+//            Button("Add"){
+//                let exercise = Exercise(context: moc)
+//                exercise.id=UUID()
+//                exercise.name = "Bench Press"
+//                exercise.muscles = "Chest"
+//                exercise.type = "strength"
+//                exercise.isFavourite = false
+//                
+////                let thisWorkout = Workout(context: moc)
+////                thisWorkout.id = UUID()
+////                thisWorkout.name = "na"
+////                thisWorkout.date = Date()
+////                thisWorkout.duration = 10
+////                thisWorkout.exercises = NSSet(array: exercisesAdded)
+//                
+//                let exp = ExercisePerformed(context: moc)
+//                exp.id = UUID()
+//                
+////                addToWorkout(thisWorkout: thisWorkout)
+//                
+////                exp.workout = thisWorkout
+//                
+////                exercise.exercisePerformed = [exp]
+//                
+//                try? moc.save()
+//                
+//            }
         }
         .navigationTitle("Exercises")
         .navigationBarTitleDisplayMode(.inline)
@@ -111,6 +111,7 @@ struct ExerciseCard: View {
     var appendExercise: (Exercise) -> Void
 
     @State var clicked: Bool = false
+    @State var popUp = false
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
@@ -122,8 +123,24 @@ struct ExerciseCard: View {
                     VStack(alignment: .leading) {
                         HStack {
                             Spacer()
+
+                            Button{
+                                popUp = true
+                            } label: {
+                                Image(systemName: "info.circle")
+                            }
+                            .popover(isPresented: $popUp){
+                                ExerciseDetailsView(exercise: ex)
+                            }
+                            
+                            Spacer()
                             Image(systemName: clicked ? "checkmark.circle.fill" : "checkmark.circle")
+                                .onTapGesture {
+                                    clicked = true
+                                    appendExercise(ex)
+                                }
                         }
+                        
                         Text("(\(ex.muscles ?? "none"))")
                             .bold()
                     }
@@ -134,10 +151,7 @@ struct ExerciseCard: View {
                     Spacer()
                 }
             }
-            .onTapGesture {
-                clicked = true
-                appendExercise(ex)
-            }
+            
             .padding()
             .background(clicked ? Color("Pink") : Color("AppColor"))
             .cornerRadius(15)
