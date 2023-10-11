@@ -29,6 +29,7 @@ struct CustomWorkoutView: View {
                 VStack {
                     Divider()
 
+                    
                     TextField("Workout Name", text: $workoutTitle)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal, 20)
