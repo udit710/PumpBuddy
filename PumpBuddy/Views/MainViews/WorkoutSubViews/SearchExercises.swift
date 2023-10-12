@@ -12,79 +12,45 @@ struct SearchExercises: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.colorScheme) var colorScheme
 
+    @State var tempEx: [ExerciseModel] = []
+
+    @State var jsonObj = JsonModel()
 
     @State private var searchText = ""
-    @FetchRequest(entity: Exercise.entity(), sortDescriptors: []) var exercises: FetchedResults<Exercise>
+    @State var exercises: [Exercise] = []
+//    @FetchRequest(entity: Exercise.entity(), sortDescriptors: []) var exercises: FetchedResults<Exercise>
     
     @Binding var exercisesAdded : [ExercisePerformed]
-//    @State var thisWorkout : Workout = Workout()
+    @State var dataNeeded: String = "muscle"
+    @State var dataFor: String = "biceps"
+    @State var isDataLoaded: Bool = false
 
     var filteredExercises: [Exercise]{
         guard !searchText.isEmpty else { return Array(exercises)}
         return exercises.filter{$0.name!.localizedCaseInsensitiveContains(searchText)}
     }
-    
-//    func addToWorkout(thisWorkout: Workout){
-//        thisWorkout.id = UUID()
-//        thisWorkout.name = "na"
-//        thisWorkout.date = Date()
-//        thisWorkout.duration = 10
-//        thisWorkout.exercises = NSSet(array: exercisesAdded)
-//    }
 
     var body: some View {
-        NavigationStack{
+        VStack{
+//            if !exercises.isEmpty{
                 List(filteredExercises){ex in
                     ExerciseCard(ex: ex, exercisesAdded: $exercisesAdded, appendExercise: appendExercise)
                 }
                 .listStyle(.plain)
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search Exercises")
-//            Button("Add"){
-//                let exercise = Exercise(context: moc)
-//                exercise.id=UUID()
-//                exercise.name = "Bench Press"
-//                exercise.muscles = "Chest"
-//                exercise.type = "strength"
-//                exercise.isFavourite = false
-//                
-////                let thisWorkout = Workout(context: moc)
-////                thisWorkout.id = UUID()
-////                thisWorkout.name = "na"
-////                thisWorkout.date = Date()
-////                thisWorkout.duration = 10
-////                thisWorkout.exercises = NSSet(array: exercisesAdded)
-//                
-//                let exp = ExercisePerformed(context: moc)
-//                exp.id = UUID()
-//                
-////                addToWorkout(thisWorkout: thisWorkout)
-//                
-////                exp.workout = thisWorkout
-//                
-////                exercise.exercisePerformed = [exp]
-//                
-//                try? moc.save()
-//                
 //            }
         }
         .navigationTitle("Exercises")
         .navigationBarTitleDisplayMode(.inline)
-//        .toolbar{
-//            ToolbarItem(placement: .navigationBarTrailing){
-//                Button(action: {
-//                    try? moc.save()
-//                }) {
-//                    Text("Add Workout")
-//                        .frame(width: 100, height: 25)
-//                        .background(colorScheme == .dark ? .white : .black)
-//                        .cornerRadius(10)
-//                        .foregroundColor(colorScheme == .dark ? .black : .white)
-//                        .font(.system(size: 13))
-//                        .bold()
-//                        .padding(.leading, 5.0)
-//                }
-//            }
-//        }
+        .onAppear{
+            tempEx = jsonObj.fetchData(dataNeeded: dataNeeded, dataFor: dataFor, context: moc)
+            exercises = jsonObj.showData(data: tempEx, context: moc)
+            isDataLoaded = true
+        }
+        .onChange(of: exercises) { _ in
+            // This will set isDataLoaded to true whenever exercises change
+            isDataLoaded.toggle()
+        }
     }
     
     func appendExercise(ex: Exercise){
@@ -92,7 +58,6 @@ struct SearchExercises: View {
         newEx.id = UUID()
         newEx.exercise = ex
         newEx.sets = []
-//        newEx.workout =
         exercisesAdded.append(newEx)
     }
 }
@@ -106,7 +71,6 @@ struct SearchExercises_Previews: PreviewProvider {
 struct ExerciseCard: View {
     var ex: Exercise
     @Binding var exercisesAdded : [ExercisePerformed]
-//    @Binding var thisWorkout : Workout
     var tempExercises : [ExercisePerformed] = []
     var appendExercise: (Exercise) -> Void
 
@@ -147,7 +111,7 @@ struct ExerciseCard: View {
                 }
                 Spacer()
                 HStack {
-                    Text(ex.instructions ?? "")
+                    Text(ex.type ?? "")
                     Spacer()
                 }
             }
