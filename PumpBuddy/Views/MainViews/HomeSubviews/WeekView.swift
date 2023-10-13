@@ -56,7 +56,7 @@ struct WeekView: View {
 //                            }
                         } else {
                             CircleView(day: day, done: false, isSelected: selectedDay == day)
-                                .opacity(0.5) // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
+//                                .opacity(0.5) // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
                         }
                     }
                 }
@@ -70,7 +70,7 @@ struct WeekView: View {
     }
     
     private func getDaysInWeek() -> [DayDate] {
-        return ["M", "T", "W", "T", "F", "S", "S"].map { DayDate(day: $0) }
+        return ["M", "Tu", "W", "Th", "F", "Sa", "Su"].map { DayDate(day: $0) }
     }
     
     
@@ -91,12 +91,12 @@ struct WeekView: View {
     private func getDayNumber(day: String) -> Int {
         switch day {
         case "M": return 2
-        case "T": return 3
+        case "Tu": return 3
         case "W": return 4
-        case "T": return 5
+        case "Th": return 5
         case "F": return 6
-        case "S": return 7
-        case "S": return 1
+        case "Sa": return 7
+        case "Su": return 1
         default: return 0
         }
     }
