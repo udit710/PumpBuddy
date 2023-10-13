@@ -58,7 +58,7 @@ struct SearchExercises: View {
                 ProcessView(text: dataFor.isEmpty ? "Select Muscle" : "Loading...")
             } else {
                 List(filteredExercises){ex in
-                    ExerciseCard(ex: ex, exercisesAdded: $exercisesAdded, appendExercise: appendExercise)
+                    ExerciseCard(ex: ex, exercisesAdded: $exercisesAdded, appendExercise: appendExercise, deleteExercise: deleteExercise)
                 }
                 .listStyle(.plain)
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search Exercises")
@@ -105,6 +105,12 @@ struct SearchExercises: View {
         newEx.sets = []
         exercisesAdded.append(newEx)
     }
+    
+    func deleteExercise(ex: Exercise){
+        exercisesAdded.removeAll{ exercise in
+            return exercise.exercise == ex
+        }
+    }
 }
 
 struct SearchExercises_Previews: PreviewProvider {
@@ -119,7 +125,8 @@ struct ExerciseCard: View {
     @Binding var exercisesAdded : [ExercisePerformed]
     var tempExercises : [ExercisePerformed] = []
     var appendExercise: (Exercise) -> Void
-
+    var deleteExercise: (Exercise) -> Void
+    
     @State var clicked: Bool = false
     @State var popUp = false
     var body: some View {
@@ -146,8 +153,12 @@ struct ExerciseCard: View {
                             Spacer()
                             Image(systemName: clicked ? "checkmark.circle.fill" : "checkmark.circle")
                                 .onTapGesture {
-                                    clicked = true
-                                    appendExercise(ex)
+                                    clicked.toggle()
+                                    if clicked {
+                                        appendExercise(ex)
+                                    } else if !clicked{
+                                        deleteExercise(ex)
+                                    }
                                 }
                         }
                         
