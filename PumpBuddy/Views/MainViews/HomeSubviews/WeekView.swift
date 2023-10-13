@@ -73,45 +73,61 @@ struct WeekView: View {
         return ["M", "T", "W", "T", "F", "S", "S"].map { DayDate(day: $0) }
     }
     
+    
     private func fetchWorkoutForDay(_ day: String) -> Workout? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E"
-        
         return workouts.first { workout in
-            guard let workoutDate = workout.date else {
+            guard let date = workout.date else {
                 return false
             }
-            let workoutDay = dateFormatter.string(from: workoutDate)
-            return workoutDay == day
+            
+            //In reference and adapted from https://www.hackingwithswift.com/books/ios-swiftui/working-with-dates
+            let workoutDay = Calendar.current.component(.weekday, from: date)
+            let selectedDayNumber = getDayNumber(day: day)
+            //In reference and adapted from https://www.hackingwithswift.com/books/ios-swiftui/working-with-dates
+            return workoutDay == selectedDayNumber
+        }
+    }
+
+    private func getDayNumber(day: String) -> Int {
+        switch day {
+        case "M": return 2
+        case "T": return 3
+        case "W": return 4
+        case "T": return 5
+        case "F": return 6
+        case "S": return 7
+        case "S": return 1
+        default: return 0
         }
     }
 }
 
-struct CircleView: View {
-    @Environment(\.colorScheme) var colorScheme
-    var day: String
-    var done: Bool
-    var isSelected: Bool
     
-    var body: some View {
-        VStack {
-            Text(day)
-                .font(.subheadline)
-                .fontWeight(.bold)
-            
-            ZStack {
-                Circle()
-                    .frame(maxWidth: 40)
-                    .foregroundColor(isSelected ? .blue : (done ? .black : .white))
+    struct CircleView: View {
+        @Environment(\.colorScheme) var colorScheme
+        var day: String
+        var done: Bool
+        var isSelected: Bool
+        
+        var body: some View {
+            VStack {
+                Text(day)
+                    .font(.subheadline)
+                    .fontWeight(.bold)
                 
-                if done {
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.white)
+                ZStack {
+                    Circle()
+                        .frame(maxWidth: 40)
+                        .foregroundColor(isSelected ? .blue : (done ? .black : .white))
+                    
+                    if done {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.white)
+                    }
                 }
             }
         }
     }
-}
     
     struct WorkoutDetailView: View {
         var workout: Workout
@@ -128,4 +144,3 @@ struct CircleView: View {
         }
     }
     
-
