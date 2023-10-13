@@ -16,40 +16,85 @@ struct SearchExercises: View {
 
     @State var jsonObj = JsonModel()
 
-    @State private var searchText = ""
+    @State var searchText = ""
     @State var exercises: [Exercise] = []
 //    @FetchRequest(entity: Exercise.entity(), sortDescriptors: []) var exercises: FetchedResults<Exercise>
     
     @Binding var exercisesAdded : [ExercisePerformed]
     @State var dataNeeded: String = "muscle"
-    @State var dataFor: String = "biceps"
+    @State var dataFor: String = ""
+    let muscleGroups = [
+        "abdominals",
+        "abductors",
+        "adductors",
+        "biceps",
+        "calves",
+        "chest",
+        "forearms",
+        "glutes",
+        "hamstrings",
+        "lats",
+        "lower_back",
+        "middle_back",
+        "neck",
+        "quadriceps",
+        "traps",
+        "triceps"
+    ]
+    
+    @State var DATAHERE: String = "Not here"
+
     @State var isDataLoaded: Bool = false
 
     var filteredExercises: [Exercise]{
-        guard !searchText.isEmpty else { return Array(exercises)}
+        guard !searchText.isEmpty else { return exercises}
         return exercises.filter{$0.name!.localizedCaseInsensitiveContains(searchText)}
     }
 
     var body: some View {
         VStack{
-//            if !exercises.isEmpty{
+            
+            if exercises.isEmpty{
+                ProcessView(text: dataFor.isEmpty ? "Select Muscle" : "Loading...")
+            } else {
                 List(filteredExercises){ex in
                     ExerciseCard(ex: ex, exercisesAdded: $exercisesAdded, appendExercise: appendExercise)
                 }
                 .listStyle(.plain)
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search Exercises")
-//            }
+            }
         }
         .navigationTitle("Exercises")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing){
+                Picker("Muscle", selection: $dataFor){
+                    Text("Select Muscle")
+                    ForEach(muscleGroups, id: \.self){
+                        Text($0)
+                    }
+                }
+            }
+        }
         .onAppear{
-            tempEx = jsonObj.fetchData(dataNeeded: dataNeeded, dataFor: dataFor, context: moc)
-            exercises = jsonObj.showData(data: tempEx, context: moc)
+//            tempEx = jsonObj.fetchData(dataNeeded: dataNeeded, dataFor: dataFor, context: moc)
+//            exercises = jsonObj.showData(data: tempEx, context: moc)
             isDataLoaded = true
         }
-        .onChange(of: exercises) { _ in
+        .onChange(of: dataFor) { _ in
             // This will set isDataLoaded to true whenever exercises change
-            isDataLoaded.toggle()
+            
+            if !dataFor.isEmpty{
+                Task{
+                    do{
+                        tempEx = try await jsonObj.fetchData(dataNeeded: dataNeeded, dataFor: dataFor, context: moc)
+                        exercises = jsonObj.showData(data: tempEx, context: moc)
+                        DATAHERE = "Data is here"
+                    } catch {
+                        print("Error while fetching data")
+                    }
+                }
+            }
         }
     }
     
@@ -64,9 +109,10 @@ struct SearchExercises: View {
 
 struct SearchExercises_Previews: PreviewProvider {
     static var previews: some View {
-        SearchExercises(exercisesAdded: .constant([]))
+        SearchExercises(exercisesAdded: .constant([]), dataFor: "")
     }
 }
+
 
 struct ExerciseCard: View {
     var ex: Exercise
@@ -128,4 +174,12 @@ struct ExerciseCard: View {
     }
     
     
+}
+
+
+struct ProcessView: View{
+    var text: String
+    var body: some View{
+        Text(text)
+    }
 }
