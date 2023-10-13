@@ -180,7 +180,7 @@ struct ShowExercise: View{
                     Section{
                         AddSetView(set: $sets[i],index: i)
                         Button("x"){
-                            deleteExercise($sets[i])
+                            deleteSet(at: i)
                         }
                     }
                 }
@@ -206,11 +206,9 @@ struct ShowExercise: View{
         
     }
     
-    func deleteExercise(_ exercise: Binding<Set>) {
-        if let index = sets.firstIndex(where: { $0.id == exercise.id }) {
+    func deleteSet(at index: Int) {
             sets.remove(at: index)
 //            moc.delete(exe[index])
-        }
     }
 }
 
