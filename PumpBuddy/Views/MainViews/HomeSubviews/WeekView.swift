@@ -27,7 +27,7 @@ struct WeekView: View {
     private var workouts: FetchedResults<Workout>
     
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack(alignment: .leading, spacing: 0) {
                 Text("This week's activity")
                     .padding([.leading, .bottom], 8.0)
@@ -42,18 +42,18 @@ struct WeekView: View {
                         let workoutForDay = fetchWorkoutForDay(day)
                         
                         if workoutForDay != nil {
-                            NavigationLink(
-                                destination: WorkoutDetailView(workout: workoutForDay!),
-                                isActive: Binding(
-                                    get: { selectedDay == day },
-                                    set: { _ in selectedDay = nil }
-                                ) // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
-                            ) {
+//                            NavigationLink(
+//                                destination: WorkoutDetailView(workout: workoutForDay!),
+//                                isActive: Binding(
+//                                    get: { selectedDay == day },
+//                                    set: { _ in selectedDay = nil }
+//                                ) // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
+//                            ) {
                                 CircleView(day: day, done: true, isSelected: selectedDay == day)
-                                    .onTapGesture {
-                                        selectedDay = day
-                                    } // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
-                            }
+//                                    .onTapGesture {
+//                                        selectedDay = day
+//                                    } // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
+//                            }
                         } else {
                             CircleView(day: day, done: false, isSelected: selectedDay == day)
                                 .opacity(0.5) // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
@@ -66,7 +66,7 @@ struct WeekView: View {
             .frame(maxWidth: .infinity)
             .background(Color("AppColor"))
             .cornerRadius(20)
-        }
+//        }
     }
     
     private func getDaysInWeek() -> [DayDate] {
