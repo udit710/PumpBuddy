@@ -1,31 +1,26 @@
 //
-//  CustomWorkoutView.swift
+//  CreatePresetWorkout.swift
 //  PumpBuddy
 //
-//  Created by Chaitanya Bhide on 23/8/2023.
+//  Created by udit on 15/10/23.
 //
+
 import SwiftUI
 
-//View to add a workout
-struct CustomWorkoutView: View {
+struct CreatePresetWorkout: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.managedObjectContext) var moc
     
-    @FetchRequest(entity: Workout.entity(), sortDescriptors: []) var works: FetchedResults<Workout>
+    @FetchRequest(entity: PresetWorkout.entity(), sortDescriptors: []) var works: FetchedResults<PresetWorkout>
     
     @State var workoutTitle: String = ""
     @State var workoutNotes: String = ""
     
-    @State private var startTime: Date?
-    @State private var endTime: Date?
-    @State private var timeInterval: Double?
-    
     @State private var isFavourite: Bool = false
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    // https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-a-timer-with-swiftui
-    
     @State var isWorkoutAdded = false
+    @State private var showAlert = false
+
     
     
     // Array to temporarily store exercises performed
@@ -40,8 +35,6 @@ struct CustomWorkoutView: View {
             ScrollView{
                 VStack {
                     Divider()
-
-                    
                     VStack{
                         TextField("Workout Name", text: $workoutTitle)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -53,13 +46,6 @@ struct CustomWorkoutView: View {
                         Divider()
                         
                         HStack{
-                            Text("Duration: \(Int(timeInterval ?? 0)/60) mins \(Int(timeInterval ?? 60)%60) secs")
-                                .onReceive(timer){_ in
-                                    if !isWorkoutAdded{
-                                        self.endTime = Date()
-                                        timeInterval = endTime?.timeIntervalSince(startTime ?? Date())
-                                    }
-                                }
                             Spacer()
                             Image(systemName: !isFavourite ? "heart" : "heart.fill")
                                 .onTapGesture {
@@ -68,12 +54,10 @@ struct CustomWorkoutView: View {
                         }
                     }
                     if exe.count > 0{
-                        Text("Exercises")
-                            .bold()
                             ForEach(Array($exe.enumerated()), id: \.element.id) { index, e in
                                 HStack {
                                     if e.id != nil {
-                                        ShowExercise(exercise: e)
+                                        SavedExercise(exercise: e)
                                         Image(systemName: "x.circle")
                                             .onTapGesture {
                                                 deleteExercise(e)
@@ -107,32 +91,48 @@ struct CustomWorkoutView: View {
                             .padding(.top, 10)
                     }
                 }
-
+                
                 .navigationTitle("Workout")
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear{
-                    if (self.startTime == nil){
-                        self.startTime = Date()
-                    }
-                }
                 .toolbar{
                     ToolbarItem(placement: .navigationBarTrailing){
                         Button(action: {
-                            self.endTime = Date()
-                            let newWorkout = Workout(context: moc)
-                            newWorkout.name = workoutTitle
-                            let sortedSets = exe.filter { $0.sets?.count ?? 0 > 0 }
-                            newWorkout.exercises = NSSet(array: sortedSets)
-                            newWorkout.id = UUID()
-                            newWorkout.duration = Int64(timeInterval ?? 0)/60
-                            newWorkout.date = Date()
-                            newWorkout.isFavourite = isFavourite
-                            newWorkout.describe = workoutNotes
-
-                            try? moc.save()
-                            isWorkoutAdded = true
+                            //                            if isWorkoutAdded{
+                            //                                Alert(title: Text("Already Added!"))
+                            //                            } else if exe.isEmpty{
+                            //                                Alert(title: Text("Kindly add exercises!"))
+                            //                            } else if workoutTitle.isEmpty{
+                            //                                Alert(title: Text("Workout title missing"))
+                            //                            } else{
+                            //                                let newWorkout = PresetWorkout(context: moc)
+                            //                                newWorkout.name = workoutTitle
+                            //                                newWorkout.exercises = NSSet(array: exe)
+                            //                                newWorkout.id = UUID()
+                            //                                newWorkout.isFavourite = isFavourite
+                            //                                newWorkout.describe = workoutNotes
+                            //
+                            //                                try? moc.save()
+                            //                                isWorkoutAdded = true
+                            //                            }
+                            if isWorkoutAdded {
+                                showAlert = true
+                            } else if exe.isEmpty {
+                                showAlert = true
+                            } else if workoutTitle.isEmpty {
+                                showAlert = true
+                            } else {
+                                let newWorkout = PresetWorkout(context: moc)
+                                newWorkout.name = workoutTitle
+                                newWorkout.exercises = NSSet(array: exe)
+                                newWorkout.id = UUID()
+                                newWorkout.isFavourite = isFavourite
+                                newWorkout.describe = workoutNotes
+                                
+                                try? moc.save()
+                                isWorkoutAdded = true
+                            }
                         }) {
-                            Text("Add Workout")
+                            Text("Create Workout")
                                 .frame(width: 100, height: 25)
                                 .background(colorScheme == .dark ? .white : .black)
                                 .cornerRadius(10)
@@ -142,8 +142,29 @@ struct CustomWorkoutView: View {
                                 .padding(.leading, 5.0)
                         }
                         .disabled(isWorkoutAdded)
+//                        .onTapGesture {
+//                            if isWorkoutAdded{
+//                                Alert(title: Text("Already Added!"))
+//                            } else if exe.isEmpty{
+//                                Alert(title: Text("Kindly add exercises!"))
+//                            } else if workoutTitle.isEmpty{
+//                                Alert(title: Text("Workout title missing"))
+//                            }
+//                        }
                     }
                 }
+                .alert(isPresented: $showAlert) {
+                            switch true {
+                            case isWorkoutAdded:
+                                return Alert(title: Text("Already Added!"))
+                            case exe.isEmpty:
+                                return Alert(title: Text("Kindly add exercises!"))
+                            case workoutTitle.isEmpty:
+                                return Alert(title: Text("Workout title missing"))
+                            default:
+                                return Alert(title: Text("Workout Added!"))
+                            }
+                        }
                 .toolbarBackground(
                     Color("AppColor"),
                     for: .navigationBar)
@@ -153,33 +174,22 @@ struct CustomWorkoutView: View {
     }
     
     
-    struct CustomWorkoutView_Previews: PreviewProvider {
+    struct CreatePresetWorkout_Previews: PreviewProvider {
         static var previews: some View {
-            CustomWorkoutView()
+            CreatePresetWorkout()
         }
     }
     
     func deleteExercise(_ exercise: Binding<ExercisePerformed>) {
         if let index = exe.firstIndex(where: { $0.id == exercise.id }) {
             exe.remove(at: index)
-//            moc.delete(exe[index])
         }
     }
-    
-    func calculateDuration() -> String {
-            if let appearanceTime = startTime, let saveTime = endTime {
-                let duration = saveTime.timeIntervalSince(appearanceTime)
-                let minutes = Int(duration) / 60
-                let seconds = Int(duration) % 60
-                return String(format: "%02d:%02d", minutes, seconds)
-            }
-            return "N/A"
-        }
 
     
 }
 
-struct ShowExercise: View{
+struct SavedExercise: View{
     @Binding var exercise : ExercisePerformed
     @Environment(\.managedObjectContext) var moc
     @Environment(\.colorScheme) var colorScheme
@@ -210,76 +220,14 @@ struct ShowExercise: View{
                     Spacer()
                 }
                 Spacer()
-                Button("Done"){
-                    let setsArray: NSSet = NSSet(array: sets)
-                    exercise.sets = setsArray
-                    
-                    try? moc.save()
-                }
-                .disabled(sets.count == 0)
             }
             .padding(.all)
             .frame(maxWidth: .infinity)
             .background(Color("AppColor"))
             .cornerRadius(10)
             
-
-            if sets.count > 0{
-                ForEach((0...sets.count-1), id:\.self){i in
-                    Section{
-                        AddSetView(set: $sets[i],index: i)
-                        Button("x"){
-                            deleteSet(at: i)
-                        }
-                    }
-                }
-            }
-            
-            HStack {
-                Spacer()
-                Button("add set +"){
-                    let newSet = Set(context: moc)
-                    sets.append(newSet)
-                }
-                .frame(width: 100, height: 25)
-                .background(Color("Pink"))
-                .cornerRadius(10)
-                .foregroundColor(colorScheme == .dark ? .black : .white)
-                .font(.system(size: 13))
-                .bold()
-                .padding(.leading)
-                Spacer()
-            }
-            
         }
         
     }
-    
-    func deleteSet(at index: Int) {
-            sets.remove(at: index)
-//            moc.delete(exe[index])
-    }
 }
 
-struct AddSetView: View{
-    @Binding var set : Set
-    var index: Int
-    
-    let weightFormatter: NumberFormatter = {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.minimumFractionDigits = 1 // Adjust as needed
-            return formatter
-        }()
-    
-    var body: some View{
-        
-        HStack {
-            Text("\(index+1).")
-            Divider()
-            Spacer()
-            TextField("weight",value: $set.weight, formatter: weightFormatter ).keyboardType(.decimalPad)
-                
-        }
-    }
-}
