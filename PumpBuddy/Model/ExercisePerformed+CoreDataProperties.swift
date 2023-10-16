@@ -19,6 +19,7 @@ extension ExercisePerformed {
     @NSManaged public var id: UUID?
     @NSManaged public var exercise: Exercise?
     @NSManaged public var workout: Workout?
+    @NSManaged public var isDone: Bool
     @NSManaged public var sets: NSSet?
     
 //    public var setsArray: [Set] {

@@ -11,6 +11,7 @@
     </entity>
     <entity name="ExercisePerformed" representedClassName=".ExercisePerformed" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isDone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="exercisePerformed" inverseEntity="Exercise"/>
         <relationship name="presetWorkout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PresetWorkout" inverseName="exercises" inverseEntity="PresetWorkout"/>
         <relationship name="sets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Set" inverseName="exercisePerformed" inverseEntity="Set"/>
@@ -25,6 +26,7 @@
     </entity>
     <entity name="Set" representedClassName=".Set" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isDone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="reps" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="exercisePerformed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExercisePerformed" inverseName="sets" inverseEntity="ExercisePerformed"/>
