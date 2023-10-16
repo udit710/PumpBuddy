@@ -19,28 +19,57 @@ struct ExerciseDetailsView: View {
     var body: some View {
         VStack{
             if let name = exercise.name {
-                Text(name)
+                HStack{
+                    Text("\(name.localizedCapitalized)")
+                        .bold()
+                        .font(.system(size: 20))
+                }
+                Divider().opacity(0)
             } else {
-                Text("None")
+                Text("Name: None")
+                Divider()
             }
-            if let instructions = exercise.instructions {
-                Text(instructions)
+            if let muscle = exercise.muscles {
+                HStack{
+                    Text("Muscle: \(muscle.localizedCapitalized)")
+                        .bold()
+                    Spacer()
+                }
+                Divider()
             } else {
-                Text("None")
+                Text("Muscle: None")
+                Divider()
             }
             
             if let type = exercise.type {
-                Text(type)
+                HStack{
+                    Text("Type: \(type.localizedCapitalized)")
+                        .bold()
+                    Spacer()
+                }
+                Divider()
             } else {
-                Text("None")
+                Text("Type: None")
+                Divider()
             }
             
-            if let muscle = exercise.muscles {
-                Text(muscle)
+            if let instructions = exercise.instructions {
+                HStack{
+                    Text("Instructions:").bold() + Text(" \(instructions)")
+                        .font(.system(size: 15))
+                    Spacer()
+                }
+                Divider()
             } else {
-                Text("None")
+                Text("Instructions: None")
+                Divider()
             }
+            
+            
+            Divider()
+            Spacer()
         }
+        .padding()
         
     }
 }

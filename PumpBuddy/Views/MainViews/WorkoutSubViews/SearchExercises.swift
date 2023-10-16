@@ -21,8 +21,27 @@ struct SearchExercises: View {
 //    @FetchRequest(entity: Exercise.entity(), sortDescriptors: []) var exercises: FetchedResults<Exercise>
     
     @Binding var exercisesAdded : [ExercisePerformed]
-    @State var dataNeeded: String = "muscle"
+    @State var dataNeeded: String = ""
     @State var dataFor: String = ""
+    let dataReq = [
+        "muscle",
+        "type",
+        "difficulty"
+    ]
+    let difficulty = [
+        "beginner",
+        "intermediate",
+        "expert"
+    ]
+    let types = [
+        "cardio",
+        "olympic_weightlifting",
+        "plyometrics",
+        "powerlifting",
+        "strength",
+        "stretching",
+        "strongman"
+    ]
     let muscleGroups = [
         "abdominals",
         "abductors",
@@ -55,7 +74,7 @@ struct SearchExercises: View {
         VStack{
             
             if exercises.isEmpty{
-                ProcessView(text: dataFor.isEmpty ? "Select Muscle" : "Loading...")
+                ProcessView(text: dataFor.isEmpty ? "Select \(dataNeeded)" : "Loading...")
             } else {
                 List(filteredExercises){ex in
                     ExerciseCard(ex: ex, exercisesAdded: $exercisesAdded, appendExercise: appendExercise, deleteExercise: deleteExercise)
@@ -67,18 +86,58 @@ struct SearchExercises: View {
         .navigationTitle("Exercises")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
-            ToolbarItem(placement: .navigationBarTrailing){
-                Picker("Muscle", selection: $dataFor){
-                    Text("Select Muscle")
-                    ForEach(muscleGroups, id: \.self){
-                        Text($0)
+            Menu{
+//                ToolbarItem(placement: .navigationBarLeading){
+                    Picker("Search By", selection: $dataNeeded){
+                        Text("Search By")
+                        ForEach(dataReq, id: \.self){
+                            Text($0.localizedCapitalized)
+                        }
                     }
-                }
+                    .background(Color("AppColor"))
+                    .cornerRadius(20)
+//                }
+//                ToolbarItem(placement: .navigationBarTrailing){
+//                    Menu {
+                        if dataNeeded == "muscle"{
+                            Picker("Muscle", selection: $dataFor){
+    //                            Text("Select")
+                                ForEach(muscleGroups, id: \.self){
+                                    Text($0.localizedCapitalized)
+                                }
+                            }
+                            .background(.red)
+                            .cornerRadius(20)
+                        }else if dataNeeded == "type"{
+                            Picker("Type", selection: $dataFor){
+    //                            Text("Select")
+                                ForEach(types, id: \.self){
+                                    Text($0.localizedCapitalized)
+                                }
+                            }
+                            .background(.red)
+                            .cornerRadius(20)
+                        } else if dataNeeded == "difficulty" {
+                            Picker("Difficulty", selection: $dataFor){
+    //                            Text("Select")
+                                ForEach(difficulty, id: \.self){
+                                    Text($0.localizedCapitalized)
+                                }
+                            }
+                            .background(.red)
+                            .cornerRadius(20)
+                        }
+                //                    } label: {
+                //                        Label("Select \(dataNeeded)", systemImage: "list.bullet")
+                //                    }
+                //                }
+            } label: {
+                Label("more", systemImage: "ellipsis.circle")
             }
         }
         .onAppear{
-//            tempEx = jsonObj.fetchData(dataNeeded: dataNeeded, dataFor: dataFor, context: moc)
-//            exercises = jsonObj.showData(data: tempEx, context: moc)
+            //            tempEx = jsonObj.fetchData(dataNeeded: dataNeeded, dataFor: dataFor, context: moc)
+            //            exercises = jsonObj.showData(data: tempEx, context: moc)
             isDataLoaded = true
         }
         .onChange(of: dataFor) { _ in
@@ -102,7 +161,10 @@ struct SearchExercises: View {
         let newEx = ExercisePerformed(context: moc)
         newEx.id = UUID()
         newEx.exercise = ex
-        newEx.sets = []
+        let thisSet: Set = Set(context: moc)
+        thisSet.weight = 0
+        thisSet.reps = 0
+        newEx.sets = [thisSet]
         exercisesAdded.append(newEx)
     }
     
@@ -134,42 +196,33 @@ struct ExerciseCard: View {
             VStack(alignment: .leading) {
                 HStack{
                     Text(ex.name ?? "exercise name")
-                        .font(.largeTitle)
-                    Spacer()
-
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Spacer()
-
-                            Button{
-                                popUp = true
-                            } label: {
-                                Image(systemName: "info.circle")
-                            }
-                            .popover(isPresented: $popUp){
-                                ExerciseDetailsView(exercise: ex)
-                            }
-                            
-                            Spacer()
-                            Image(systemName: clicked ? "checkmark.circle.fill" : "checkmark.circle")
-                                .onTapGesture {
-                                    clicked.toggle()
-                                    if clicked {
-                                        appendExercise(ex)
-                                    } else if !clicked{
-                                        deleteExercise(ex)
-                                    }
-                                }
-                        }
+                        .bold()
                         
-                        Text("(\(ex.muscles ?? "none"))")
-                            .bold()
-                    }
+                    Spacer()
+                    Image(systemName: clicked ? "checkmark.circle.fill" : "checkmark.circle")
+                        .onTapGesture {
+                            clicked.toggle()
+                            if clicked {
+                                appendExercise(ex)
+                            } else if !clicked{
+                                deleteExercise(ex)
+                            }
+                        }
                 }
                 Spacer()
+                
                 HStack {
-                    Text(ex.type ?? "")
+                    Text("\(ex.muscles?.localizedCapitalized ?? "none")")
+                        .opacity(0.7)
                     Spacer()
+                    Button{
+                        popUp = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .popover(isPresented: $popUp){
+                        ExerciseDetailsView(exercise: ex)
+                    }
                 }
             }
             

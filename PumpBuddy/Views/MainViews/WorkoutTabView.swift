@@ -13,6 +13,10 @@ struct WorkoutTabView: View {
     @Environment(\.defaultMinListRowHeight) var minRowHeight
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(entity: PresetWorkout.entity(), sortDescriptors: []) var works: FetchedResults<PresetWorkout>
+    @State var editMode: EditMode = .inactive
+    @State var isEditing = false
+
+
     
     func deleteWorkout(at offsets: IndexSet){
         for index in offsets {
@@ -66,7 +70,7 @@ struct WorkoutTabView: View {
                         CreatePresetWorkout()
                     } label: {
                         ZStack{
-                            Text("Create Preset Workout")
+                            Text("Create Routine Workout")
                                 .foregroundColor(.white)
                                 .padding()
                                 .frame(maxWidth: .infinity)
@@ -75,45 +79,41 @@ struct WorkoutTabView: View {
                         }
                     }
                     
-                    HStack{
-                        Text("My Preset Workouts")
-                            .bold()
-                            .foregroundColor(colorScheme == .dark ? .white : .accentColor)
-                        Spacer()
-//                        EditButton()
-                    }
-                    
-//                    List{
-                        ForEach(works){workout in
-                            if let setOfExercises = workout.exercises {
-                                let arrayOfExercises = Array(setOfExercises) as? [ExercisePerformed]
-                                
-                                // Now you can use arrayOfExercises as an array of ExercisePerformed objects
-                                HStack{
-                                    WorkoutBox(title: workout.name ?? "Workout", notes: workout.describe ?? "", excercises: arrayOfExercises ?? [])
-    //                                Image(systemName: "x.circle")
-    //                                    .onTapGesture {
-    //                                        deleteWorkout(at: index)
-    //                                    }
-                                }
+                        HStack{
+                            Text("My Routine Workouts")
+                                .bold()
+                                .foregroundColor(colorScheme == .dark ? .white : .accentColor)
+                            Spacer()
+                            Button{
+                                isEditing.toggle()
+                                editMode = isEditing ? .active : .inactive
+                            } label: {
+                                Image(systemName: "slider.horizontal.3")
                             }
                         }
-//                        .onDelete(perform: deleteWorkout)
-//                    }
-//                    .frame( maxWidth: .infinity,minHeight: minRowHeight * 20)
-//                    .scrollContentBackground(.hidden)
+                    if isEditing{
+                        Text("Edit mode: swipe left to remove routines")
+                    }
+                        
+                        List{
+                            ForEach(works){workout in
+                                if let setOfExercises = workout.exercises {
+                                    let arrayOfExercises = Array(setOfExercises) as? [ExercisePerformed]
+                                        HStack{
+                                            WorkoutBox(title: workout.name ?? "Workout", notes: workout.describe ?? "", excercises: arrayOfExercises ?? [])
+                                        }
+                                } // ChatGPT
+                            }
+                            .onDelete(perform: deleteWorkout)
+                            .environment(\.editMode, $editMode)
+                            .listRowInsets(.init(top: 0, leading: 0, bottom: 5, trailing: 0))
 
-//                    WorkoutBox(title: "Chest", excercises: ["Bench Press", "DB Fly", "Incline Bench"]){
-//                        BoxButton(label: "Start Workout"){
-//
-//                        }
-//                    }
-//
-//                    WorkoutBox(title: "Legs", excercises: ["Squats", "Leg Extension"]){
-//                        BoxButton(label: "Start Workout"){
-//
-//                        }
-//                    }
+                        }
+                        
+                        .padding(.horizontal, -15.0)
+                        .listSectionSeparator(.hidden)
+                        .frame( minWidth: 300,minHeight: minRowHeight * 20, maxHeight: .infinity)
+                        .scrollContentBackground(.hidden)
                 }
                 
                 .padding(.horizontal)
