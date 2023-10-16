@@ -12,11 +12,14 @@ struct SignUpPageView: View {
     @AppStorage("email") var email: String = ""
     @AppStorage("password") var password: String = ""
     @AppStorage("confirmedPassword") var confirmedPassword: String = ""
-    @AppStorage("currentWeight") var currentWeight: String = ""
-    @AppStorage("goalWeight") var goalWeight: String = ""
+    @AppStorage("currentWeight") var currentWeight: Int = 150 // Default value, change as needed
+    @AppStorage("goalWeight") var goalWeight: Int = 150 // Default value, change as needed
     @AppStorage("loggedIn") var loggedIn: Bool = false
     @State private var isValid: Bool = false
     @State private var showInvalidInputAlert = false
+
+    @State private var currentWeightOptions: [Int] = Array(40...300)
+    @State private var goalWeightOptions: [Int] = Array(40...300)
 
     var body: some View {
         VStack(spacing: 20) {
@@ -26,8 +29,20 @@ struct SignUpPageView: View {
                     InputField(placeholder: "Email", text: $email, keyboardType: .emailAddress)
                     SecureInputField(placeholder: "Password", text: $password)
                     SecureInputField(placeholder: "Confirm Password", text: $confirmedPassword)
-                    NumericInputField(placeholder: "Current Weight", text: $currentWeight)
-                    NumericInputField(placeholder: "Goal Weight", text: $goalWeight)
+                    
+                    //Adapted from https://codewithchris.com/swiftui-picker-2023/
+                    Picker(selection: $currentWeight, label: Text("Current Weight (kgs)")) {
+                        ForEach(currentWeightOptions, id: \.self) { weight in
+                            Text("\(weight)")
+                        }
+                    }
+
+                    //Adapted from https://codewithchris.com/swiftui-picker-2023/
+                    Picker(selection: $goalWeight, label: Text("Goal Weight (kgs)")) {
+                        ForEach(goalWeightOptions, id: \.self) { weight in
+                            Text("\(weight)")
+                        }
+                    }
                 }
             }
 
@@ -43,13 +58,21 @@ struct SignUpPageView: View {
                 }
             }
             .buttonStyle(RoundedButtonStyle(isEnabled: isValid))
+            .padding(.vertical)
         }
         .padding()
         .alert(isPresented: $showInvalidInputAlert) {
-            Alert(title: Text("Invalid Input"), message: Text("Please fill in all fields and ensure they meet the required criteria."), dismissButton: .default(Text("OK")))
+            Alert(
+                title: Text("Invalid Input"),
+                message: Text("Please fill in all fields and ensure they meet the required criteria."),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 }
+
+
+
 
 struct InputField: View {
     var placeholder: String

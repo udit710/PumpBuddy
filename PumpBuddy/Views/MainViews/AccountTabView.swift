@@ -9,6 +9,12 @@ import SwiftUI
 import UIKit
 
 struct AccountTabView: View {
+    @FetchRequest(
+        //adapted from https://stackoverflow.com/questions/26883270/swift-sort-array-by-sort-descriptors
+        //used to sort ascending
+        sortDescriptors: [NSSortDescriptor(keyPath: \Workout.date, ascending: false)],
+        animation: .default)
+    private var workouts: FetchedResults<Workout>
     @AppStorage("username") var username: String = ""
     @AppStorage("email") var email: String = ""
     @AppStorage("currentWeight") var currentWeight: String = ""
@@ -19,7 +25,19 @@ struct AccountTabView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
+                HStack {
+                    NavigationLink(destination: WorkoutHistoryView()) {
+                        Image(systemName: "clock")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color("AppColor"))
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
+                            .padding()
+                    }
+                    .padding(.leading)
+                    Spacer()
+                }
 
                 VStack {
                     Image(uiImage: selectedImage ?? UIImage(systemName: "person.fill")!)
@@ -60,29 +78,30 @@ struct AccountTabView: View {
 
                     Spacer()
 
-                    NavigationLink(destination: WorkoutHistoryView()) {
-                        Image(systemName: "clock")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color("AppColor"))
-                            .cornerRadius(20)
-                            .shadow(radius: 5)
-                            .padding()
+                    Section(header: Text("Workout History")) {
+                        List {
+                            ForEach(workouts, id: \.id) { workout in
+                                NavigationLink(destination: WorkoutDetailView(workout: workout)) {
+                                    WorkoutCardView(workout: workout)
+                                }
+                                .listRowBackground(Color.white)
+                            }
+                        }
+                        .listStyle(PlainListStyle())
                     }
-                    .padding(.horizontal)
-                    .navigationBarTitle("Account Info")
-                    .toolbarBackground(
-                        Color("AppColor"),
-                        for: .navigationBar)
-                    .toolbarBackground(.visible, for: .navigationBar)
-                    .navigationBarTitleDisplayMode(.inline)
                 }
             }
+            .navigationBarTitle("Account Info")
+            .toolbarBackground(
+                Color("AppColor"),
+                for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
-// ImagePicker View
+
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
     var onDismiss: () -> Void // Callback to dismiss the sheet
