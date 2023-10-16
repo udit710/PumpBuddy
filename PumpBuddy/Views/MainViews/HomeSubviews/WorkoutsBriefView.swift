@@ -86,14 +86,29 @@ struct recentWorkouts: View{
             Divider()
                 .overlay(Color("Pink"))
 //             Display up to 2 recent workouts with name and duration
-            ForEach(workouts.prefix(upTo: 2)) { workout in
-                HStack{
-                    Text(workout.name ?? "Workout")
-                    Spacer()
-                    Text("\(String(workout.duration))m")
+            if workouts.isEmpty{
+                Text("No Workouts yet")
+            }
+            else if workouts.count == 1{
+                ForEach(workouts.prefix(upTo: 1)) { workout in
+                    HStack{
+                        Text(workout.name ?? "Workout")
+                        Spacer()
+                        Text("\(String(workout.duration))m")
+                    }
+                    Divider()
+                        .overlay(Color("Pink"))
                 }
-                Divider()
-                    .overlay(Color("Pink"))
+            } else{
+                ForEach(workouts.prefix(upTo: 2)) { workout in
+                    HStack{
+                        Text(workout.name ?? "Workout")
+                        Spacer()
+                        Text("\(String(workout.duration))m")
+                    }
+                    Divider()
+                        .overlay(Color("Pink"))
+                }
             }
         }
         .padding()

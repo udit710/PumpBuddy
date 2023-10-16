@@ -69,7 +69,7 @@ struct HomeView: View{
                                 .foregroundColor(colorScheme == .dark ? .black : .white)
                                 .cornerRadius(20)
                                 .padding(.trailing)
-                                .frame(height: 200)
+                                .frame(minHeight: 200)
                         }
                     }
                     

@@ -129,43 +129,6 @@ struct WeekView: View {
         }
     }
     
-struct WorkoutDetailView: View {
-    var workout: Workout
 
-    var body: some View {
-        Form {
-            Section(header: Text("Workout Details")) {
-                HStack {
-                    Text("Date:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text("\(workout.date!, style: .date)")
-                }
-
-                HStack {
-                    Text("Name:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(workout.name ?? "")
-                }
-
-                HStack {
-                    Text("Duration:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text("\(workout.duration) minutes")
-                }
-
-                HStack {
-                    Text("Description:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(workout.describe ?? "")
-                }
-            }
-        }
-        .navigationBarTitle("Workout Details", displayMode: .inline)
-    }
-}
 
     
