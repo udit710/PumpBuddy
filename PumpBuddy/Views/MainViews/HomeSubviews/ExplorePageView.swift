@@ -25,8 +25,8 @@ struct ExplorePageView: View {
                     //                ExploreCard(title: workout.name ?? "Workout", description: exe?[0].exercise?.name ?? "none")
                     if let exe = workout.exercises?.allObjects as? [ExercisePerformed], !exe.isEmpty {
                         if let ss = exe[0].sets?.allObjects as? [Set],
-                           !ss.isEmpty{
-                            ExploreCard(title: workout.name ?? "Workout", description: exe[0].exercise?.name ?? "none", setCount: Int(ss[0].weight))
+                           ss.count >= 2{
+                            ExploreCard(title: workout.name ?? "Workout", description: exe[0].exercise?.name ?? "none", setCount: Int(ss[0].weight), setCount2: Int(ss[1].weight))
                         }else{
                             ExploreCard(title: workout.name ?? "Workout", description: exe[0].exercise?.name ?? "none", setCount: exe[0].sets?.count ?? 0)
                         }
@@ -87,6 +87,7 @@ struct ExploreCard: View{
     var title : String
     var description : String
     var setCount: Int
+    var setCount2: Int?
     var imageSet: [String] = ["Running-explore", "Weights-explore", "HIIT-explore"]
     var body: some View{
         VStack(alignment: .leading) {
@@ -98,6 +99,8 @@ struct ExploreCard: View{
                 .bold()
             Text(description)
             Text("Sets: \(setCount)")
+            Text("Sets: \(setCount2 ?? 0)")
+            
         }
         
     }
