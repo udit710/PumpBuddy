@@ -2,12 +2,13 @@
 //  WorkoutWidget.swift
 //  WorkoutWidget
 //
-//  Created by Chaitanya Bhide on 17/10/2023.
+//  Created by udit on 18/10/23.
 //
 
 import WidgetKit
 import SwiftUI
 import Intents
+import CoreData
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
@@ -30,21 +31,52 @@ struct Provider: IntentTimelineProvider {
             entries.append(entry)
         }
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let timeline = Timeline(entries: entries, policy: .never)
         completion(timeline)
     }
 }
 
 struct SimpleEntry: TimelineEntry {
+    
     let date: Date
     let configuration: ConfigurationIntent
 }
 
 struct WorkoutWidgetEntryView : View {
     var entry: Provider.Entry
+    let encodedCurrWeight = UserDefaults(suiteName: "group.com.Udit.PumpBuddy")?.object(forKey: "currentWeight") as? Data
+    let encodedGoalWeight = UserDefaults(suiteName: "group.com.Udit.PumpBuddy")?.object(forKey: "goalWeight") as? Data
 
+        
     var body: some View {
-        Text(entry.date, style: .time)
+        VStack{
+
+
+            if let currWeight = encodedCurrWeight, let goalWeight = encodedGoalWeight {
+                 let currDecoded = try? JSONDecoder().decode(Int.self, from: currWeight)
+                 let goalDecoded = try? JSONDecoder().decode(Int.self, from: goalWeight)
+                if let curr = currDecoded, let goal = goalDecoded{
+                    // You successfully retrieved your car object!
+                    VStack{
+                        HStack{
+                            Image(systemName: "dumbbell")
+                            Text("Current weight: \(curr)kg")
+                            Image(systemName: "dumbbell")
+                        }
+                        Divider()
+                        if goal < curr{
+                            Text("You need to lose \(curr-goal)kg to acheive your goal weight of \(goal)kg")
+                        }
+                        else if goal > curr{
+                            Text("You need to gain \(goal-curr)kg to acheive your goal weight of \(goal)kg")
+                        }else if goal == curr{
+                            Text("Bravo! You are at your goal weight of \(goal)kg")
+                        }
+                    }
+                    .padding()
+                }
+            }
+        }
     }
 }
 
@@ -54,9 +86,11 @@ struct WorkoutWidget: Widget {
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             WorkoutWidgetEntryView(entry: entry)
+                
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
+        .supportedFamilies([.systemMedium])
     }
 }
 

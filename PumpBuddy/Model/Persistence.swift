@@ -34,19 +34,7 @@ struct PersistenceController{
                 return
             }
             
-//            container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         }
     }
     
-//    func save() {
-//        let context = container.viewContext
-//
-//        if context.hasChanges {
-//            do {
-//                try context.save()
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
 }

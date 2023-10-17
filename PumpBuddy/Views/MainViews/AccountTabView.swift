@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import WidgetKit
 
 struct AccountTabView: View {
     @FetchRequest(
@@ -19,9 +20,13 @@ struct AccountTabView: View {
     @AppStorage("email") var email: String = ""
     @AppStorage("currentWeight") var currentWeight: String = ""
     @AppStorage("goalWeight") var goalWeight: String = ""
+    @AppStorage("password") var password: String = ""
+    @AppStorage("confirmedPassword") var confirmedPassword: String = ""
     @State private var selectedImage: UIImage? // To store the selected image
     @State private var isImagePickerPresented: Bool = false
     @State private var isEditWeightsSheetPresented: Bool = false
+    @State private var revealPwd: Bool = false
+    @State private var isChangeOn: Bool = false
     @State private var newCurrentWeight: String = ""
     @State private var newGoalWeight: String = ""
 
@@ -84,7 +89,7 @@ struct AccountTabView: View {
                     Button(action: {
                         isEditWeightsSheetPresented.toggle()
                     }) {
-                        Text("Edit Weights")
+                        Text("Edit Weight Entries")
                             .foregroundColor(.white)
                             .padding()
                             .background(Color("AppColor"))
@@ -99,10 +104,33 @@ struct AccountTabView: View {
                             goalWeight: $goalWeight
                         )
                     }
+                    .popover(isPresented: $isChangeOn){
+                        VStack{
+                            Form{
+                                HStack{
+                                    Text("New Password: ")
+                                    SecureInputField(placeholder: "Password", text: $password)
+                                }
+                                
+                                HStack{
+                                    Text("Confirm New Password: ")
+                                    SecureInputField(placeholder: "Confirm", text: $confirmedPassword)
+                                }
+                            }
+                        }
+                    }
 
                     Spacer()
 
                     Section(header: Text("Workout History")) {
+                        Divider()
+                        if workouts.isEmpty{
+                            Text("Oops... Looks like you do not have any workouts yet! Go to the Workout tab to add workouts.")
+                                .padding()
+                                .background(Color("Pink"))
+                                .cornerRadius(20)
+                            
+                        }
                         List {
                             ForEach(workouts, id: \.id) { workout in
                                 NavigationLink(destination: WorkoutDetailView(workout: workout)) {
@@ -121,8 +149,29 @@ struct AccountTabView: View {
                 for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar{
+                ToolbarItem{
+                    Button{
+                        isChangeOn.toggle()
+                    } label: {
+                        Image(systemName: "pencil")
+                    }
+                }
+            }
         }
+        .onChange(of: isEditWeightsSheetPresented == false) { newValue in
+                    if newValue {
+                        let _curr_weight = try! JSONEncoder().encode(Int(currentWeight))
+                        UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_curr_weight, forKey: "currentWeight")
+                        let _goal_weight = try! JSONEncoder().encode(Int(goalWeight))
+                        UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_goal_weight, forKey: "goalWeight")
+                        WidgetCenter.shared.reloadTimelines(ofKind: "WorkoutWidget")
+                        WidgetCenter.shared.reloadAllTimelines()
+                        print("Widget")
+                    }
+                }
     }
+    
 }
 
 
@@ -135,11 +184,19 @@ struct EditWeightsSheet: View {
         NavigationView {
             Form {
                 Section(header: Text("Edit Weights")) {
-                    TextField("Current Weight", text: $currentWeight)
-                        .keyboardType(.numberPad)
+                    HStack{
+                        Text("Current Weight:")
+                        Spacer()
+                        TextField("Current Weight", text: $currentWeight)
+                            .keyboardType(.numberPad)
+                    }
                     
-                    TextField("Goal Weight", text: $goalWeight)
-                        .keyboardType(.numberPad)
+                    HStack{
+                        Text("Goal Weight:")
+                        Spacer()
+                        TextField("Goal Weight", text: $goalWeight)
+                            .keyboardType(.numberPad)
+                    }
                 }
             }
             .navigationBarTitle("Edit Weights")

@@ -2,7 +2,7 @@
 //  WorkoutWidgetBundle.swift
 //  WorkoutWidget
 //
-//  Created by Chaitanya Bhide on 17/10/2023.
+//  Created by udit on 18/10/23.
 //
 
 import WidgetKit

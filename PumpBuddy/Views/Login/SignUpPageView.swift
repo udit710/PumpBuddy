@@ -47,10 +47,16 @@ struct SignUpPageView: View {
 
             Button("Continue") {
                 if isValidInput() {
-                    UserDefaults.standard.set(username, forKey: "username")
-                    UserDefaults.standard.set(email, forKey: "email")
-                    UserDefaults.standard.set(currentWeight, forKey: "currentWeight")
-                    UserDefaults.standard.set(goalWeight, forKey: "goalWeight")
+                    let _user_name = try! JSONEncoder().encode(username)
+                    UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_user_name, forKey: "username")
+                    let _email = try! JSONEncoder().encode(email)
+                    UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_email, forKey: "email")
+                    let _curr_weight = try! JSONEncoder().encode(currentWeight)
+                    UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_curr_weight, forKey: "currentWeight")
+                    let _goal_weight = try! JSONEncoder().encode(goalWeight)
+                    UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_goal_weight, forKey: "goalWeight")
+                    let _password = try! JSONEncoder().encode(password)
+                    UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_password, forKey: "password")
 
                     // Set the loggedIn flag
                     UserDefaults.standard.set(true, forKey: "loggedIn")

@@ -44,24 +44,24 @@ struct CreatePresetWorkout: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.horizontal, 20)
                         Divider()
-                        
-                        HStack{
-                            Spacer()
-                            Image(systemName: !isFavourite ? "heart" : "heart.fill")
-                                .onTapGesture {
-                                    isFavourite.toggle()
-                                }
-                        }
                     }
+                    Divider()
                     if exe.count > 0{
                             ForEach(Array($exe.enumerated()), id: \.element.id) { index, e in
                                 HStack {
                                     if e.id != nil {
-                                        SavedExercise(exercise: e)
-                                        Image(systemName: "x.circle")
-                                            .onTapGesture {
-                                                deleteExercise(e)
+                                        VStack{
+                                            HStack{
+                                                Spacer()
+                                                Image(systemName: "x.circle")
+                                                    .onTapGesture {
+                                                        deleteExercise(e)
+                                                    }
+                                                    .foregroundColor(.red)
                                             }
+                                            SavedExercise(exercise: e)
+                                            Divider()
+                                        }
                                     }
                                 }
                             }
@@ -194,19 +194,12 @@ struct SavedExercise: View{
     @Environment(\.managedObjectContext) var moc
     @Environment(\.colorScheme) var colorScheme
     @State var popUp = false
-
-
-
-    @State var sets : [Set] = []
-
+    
     var body: some View{
         VStack(alignment: .leading) {
             HStack{
                 Text(exercise.exercise?.name ?? "Exercise")
-                    .font(.largeTitle)
                     .bold()
-                
-                Text("Weight")
                 
                 VStack{
                     Button{
@@ -220,12 +213,20 @@ struct SavedExercise: View{
                     Spacer()
                 }
                 Spacer()
+                //                Button(exercise.isDone ? "Added!" : "Done"){
+                //                    let setsArray: NSSet = NSSet(array: sets)
+                //                    exercise.sets = setsArray
+                //
+                //                    try? moc.save()
+                //
+                //                    exercise.isDone = true
+                //                }
+                //                .disabled(sets.count == 0 || !sets.allSatisfy { $0.isDone } || exercise.isDone)
             }
             .padding(.all)
             .frame(maxWidth: .infinity)
             .background(Color("AppColor"))
             .cornerRadius(10)
-            
         }
         
     }

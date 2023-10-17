@@ -41,7 +41,7 @@ struct ExplorePageView: View {
                 workout.id = UUID()
                 workout.name = "Leg Day"
                 workout.describe = "Intense squat session"
-                workout.date = Date()
+                workout.date = Calendar.current.date(byAdding: .day, value: [-5,-4,-3,-2].randomElement()!, to: Date())!
                 workout.duration = 50
                 workout.isFavourite = false
                 

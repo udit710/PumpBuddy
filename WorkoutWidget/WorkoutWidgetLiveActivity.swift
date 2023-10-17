@@ -2,7 +2,7 @@
 //  WorkoutWidgetLiveActivity.swift
 //  WorkoutWidget
 //
-//  Created by Chaitanya Bhide on 17/10/2023.
+//  Created by udit on 18/10/23.
 //
 
 import ActivityKit
@@ -28,7 +28,7 @@ struct WorkoutWidgetLiveActivity: Widget {
             }
             .activityBackgroundTint(Color.cyan)
             .activitySystemActionForegroundColor(Color.black)
-
+            
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
@@ -53,25 +53,5 @@ struct WorkoutWidgetLiveActivity: Widget {
             .widgetURL(URL(string: "http://www.apple.com"))
             .keylineTint(Color.red)
         }
-    }
-}
-
-struct WorkoutWidgetLiveActivity_Previews: PreviewProvider {
-    static let attributes = WorkoutWidgetAttributes(name: "Me")
-    static let contentState = WorkoutWidgetAttributes.ContentState(value: 3)
-
-    static var previews: some View {
-        attributes
-            .previewContext(contentState, viewKind: .dynamicIsland(.compact))
-            .previewDisplayName("Island Compact")
-        attributes
-            .previewContext(contentState, viewKind: .dynamicIsland(.expanded))
-            .previewDisplayName("Island Expanded")
-        attributes
-            .previewContext(contentState, viewKind: .dynamicIsland(.minimal))
-            .previewDisplayName("Minimal")
-        attributes
-            .previewContext(contentState, viewKind: .content)
-            .previewDisplayName("Notification")
     }
 }
