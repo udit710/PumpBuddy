@@ -4,7 +4,6 @@
 //
 //  Created by udit on 22/08/23.
 //
-
 import SwiftUI
 
 struct SignUpPageView: View {
@@ -48,6 +47,7 @@ struct SignUpPageView: View {
 
             Button("Continue") {
                 if isValidInput() {
+                    loggedIn = true
                     UserDefaults.standard.set(username, forKey: "username")
                     UserDefaults.standard.set(email, forKey: "email")
                     UserDefaults.standard.set(currentWeight, forKey: "currentWeight")
@@ -64,7 +64,7 @@ struct SignUpPageView: View {
             }
             .buttonStyle(RoundedButtonStyle(isEnabled: isValid))
             .foregroundColor(.white)
-            .background(isValid ? Color.green : Color.gray)
+            .background(isValid ? Color.green : Color.green)
             .cornerRadius(25)
             .opacity(isValid ? 1 : 0.5)
             .padding(.vertical)

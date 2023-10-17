@@ -5,6 +5,7 @@
 //  Created by udit on 22/08/23.
 //
 
+//calender implementation integrated and adapted from https://medium.com/swift-productions/add-an-event-to-the-calendar-xcode-12-swift-5-3-35b8bf149859
 
 import SwiftUI
 import CoreData
@@ -28,6 +29,8 @@ struct WorkoutHistoryView: View {
         try? moc.save()
     }
 
+    @State private var selectedDate: Date = Date()
+
     var body: some View {
         NavigationView {
             VStack {
@@ -46,17 +49,28 @@ struct WorkoutHistoryView: View {
                     }
                     .onDelete(perform: deleteWorkout)
                 }
+
                 Spacer()
             }
             .navigationTitle("Workout History")
             .padding(.top, -50)
-            .toolbarBackground(
-                Color("AppColor"),
-                for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+    }
+
+    private func getMonthDates() -> [Date] {
+        let range = Calendar.current.range(of: .day, in: .month, for: selectedDate)!
+        let days = range.map { day in
+            Calendar.current.date(byAdding: .day, value: day - 1, to: startOfMonth())!
+        }
+        return days
+    }
+
+    // Helper function to get the start of the current month
+    private func startOfMonth() -> Date {
+        return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: selectedDate))!
     }
 }
 
@@ -65,6 +79,26 @@ struct WorkoutHistoryView_Previews: PreviewProvider {
         WorkoutHistoryView()
    }
 }
+
+struct DateView: View {
+    let date: Date
+    let isSelected: Bool
+    let hasWorkout: Bool
+
+    var body: some View {
+        Text("\(Calendar.current.component(.day, from: date))")
+            .frame(width: 30, height: 30)
+            .foregroundColor(isSelected ? .white : (hasWorkout ? .black : .primary))
+            .background(isSelected ? Color("AppColor") : (hasWorkout ? Color.black : Color.clear))
+            .clipShape(Circle())
+    }
+}
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MMMM yyyy"
+    return formatter
+}()
 
 struct WorkoutCardView: View {
     var workout: Workout
@@ -221,4 +255,5 @@ struct WorkoutDetailView: View {
 
     }
 }
+
 
