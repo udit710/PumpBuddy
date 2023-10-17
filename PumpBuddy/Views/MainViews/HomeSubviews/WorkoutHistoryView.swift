@@ -123,7 +123,9 @@ struct SetDetailView: View {
     var body: some View {
         VStack{
             ForEach(sets.indices, id: \.self) { index in
-                if let weight = sets[index].weight, let reps = sets[index].reps {
+                let weight = sets[index].weight
+                let reps =
+                sets[index].reps
                     VStack {
                         HStack {
                             Text("\(index + 1)")
@@ -144,7 +146,7 @@ struct SetDetailView: View {
             }
         }
     }
-}
+
 
 struct WorkoutDetailView: View {
     var workout: Workout

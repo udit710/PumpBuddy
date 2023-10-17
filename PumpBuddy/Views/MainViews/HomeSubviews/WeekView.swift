@@ -17,62 +17,71 @@ struct DayDate: Identifiable {
     }
 }
 
+
 struct WeekView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var selectedDay: String?
+    @State private var shouldReloadView = false // New state variable for reloading
+    @State private var currentDate = Date()
     
     @FetchRequest(
         sortDescriptors: [],
         animation: .default)
     private var workouts: FetchedResults<Workout>
     
+    @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     var body: some View {
-//        NavigationView {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("This week's activity")
-                    .padding([.leading, .bottom], 8.0)
-                    .font(.custom("Arial", size: 25))
-                    .bold()
-                
-                let weekDays = getDaysInWeek()
-                
-                HStack {
-                    ForEach(weekDays) { dayInfo in
-                        let day = dayInfo.day
-                        let workoutForDay = fetchWorkoutForDay(day)
-                        
-                        if workoutForDay != nil {
-//                            NavigationLink(
-//                                destination: WorkoutDetailView(workout: workoutForDay!),
-//                                isActive: Binding(
-//                                    get: { selectedDay == day },
-//                                    set: { _ in selectedDay = nil }
-//                                ) // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
-//                            ) {
-                                CircleView(day: day, done: true, isSelected: selectedDay == day)
-//                                    .onTapGesture {
-//                                        selectedDay = day
-//                                    } // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
-//                            }
-                        } else {
-                            CircleView(day: day, done: false, isSelected: selectedDay == day)
-//                                .opacity(0.5) // adapted from https://sarunw.com/posts/swiftui-button-disable/ and also used ChatGPT to help modify
-                        }
+        VStack(alignment: .leading, spacing: 0) {
+            Text("This week's activity")
+                .padding([.leading, .bottom], 8.0)
+                .font(.custom("Arial", size: 25))
+                .bold()
+            
+            let weekDays = getDaysInWeek()
+            
+            HStack {
+                ForEach(weekDays) { dayInfo in
+                    let day = dayInfo.day
+                    let workoutForDay = fetchWorkoutForDay(day)
+                    
+                    // adapted from https://sarunw.com/posts/swiftui-button-disable/
+                    if workoutForDay != nil {
+                        CircleView(day: day, done: true, isSelected: selectedDay == day)
+                    } else {
+                        // adapted from https://sarunw.com/posts/swiftui-button-disable/
+                        CircleView(day: day, done: false, isSelected: selectedDay == day)
                     }
                 }
-                .foregroundColor(colorScheme == .light ? .white : .black)
             }
-            .padding(.vertical, 16.0)
-            .frame(maxWidth: .infinity)
-            .background(Color("AppColor"))
-            .cornerRadius(20)
-//        }
+            .foregroundColor(colorScheme == .light ? .white : .black)
+        }
+        .padding(.vertical, 16.0)
+        .frame(maxWidth: .infinity)
+        .background(Color("AppColor"))
+        .cornerRadius(20)
+        .onReceive(timer) { _ in
+            let calendar = Calendar.current
+            let currentDate = Date()
+
+            if let nextMonday = calendar.nextDate(after: currentDate, matching: DateComponents(weekday: 2), matchingPolicy: .nextTime, direction: .forward) {
+                if calendar.isDate(currentDate, equalTo: nextMonday, toGranularity: .day) {
+                    DispatchQueue.main.async {
+                        shouldReloadView.toggle()
+                    }
+                }
+            }
+        }
+
+
+        .onAppear {
+        }
+        .id(shouldReloadView)
     }
     
     private func getDaysInWeek() -> [DayDate] {
         return ["M", "Tu", "W", "Th", "F", "Sa", "Su"].map { DayDate(day: $0) }
     }
-    
     
     private func fetchWorkoutForDay(_ day: String) -> Workout? {
         return workouts.first { workout in
@@ -87,7 +96,9 @@ struct WeekView: View {
             return workoutDay == selectedDayNumber
         }
     }
-
+    
+    
+    
     private func getDayNumber(day: String) -> Int {
         switch day {
         case "M": return 2
@@ -129,6 +140,43 @@ struct WeekView: View {
         }
     }
     
+struct WorkoutDetailView2: View {
+    var workout: Workout
 
+    var body: some View {
+        Form {
+            Section(header: Text("Workout Details")) {
+                HStack {
+                    Text("Date:")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text("\(workout.date!, style: .date)")
+                }
+
+                HStack {
+                    Text("Name:")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text(workout.name ?? "")
+                }
+
+                HStack {
+                    Text("Duration:")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text("\(workout.duration) minutes")
+                }
+
+                HStack {
+                    Text("Description:")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text(workout.describe ?? "")
+                }
+            }
+        }
+        .navigationBarTitle("Workout Details", displayMode: .inline)
+    }
+}
 
     
