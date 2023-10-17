@@ -12,8 +12,8 @@ struct SignUpPageView: View {
     @AppStorage("email") var email: String = ""
     @AppStorage("password") var password: String = ""
     @AppStorage("confirmedPassword") var confirmedPassword: String = ""
-    @AppStorage("currentWeight") var currentWeight: Int = 150 // Default value, change as needed
-    @AppStorage("goalWeight") var goalWeight: Int = 150 // Default value, change as needed
+    @AppStorage("currentWeight") var currentWeight: Int = 150
+    @AppStorage("goalWeight") var goalWeight: Int = 150
     @AppStorage("loggedIn") var loggedIn: Bool = false
     @State private var isValid: Bool = false
     @State private var showInvalidInputAlert = false
@@ -29,15 +29,13 @@ struct SignUpPageView: View {
                     InputField(placeholder: "Email", text: $email, keyboardType: .emailAddress)
                     SecureInputField(placeholder: "Password", text: $password)
                     SecureInputField(placeholder: "Confirm Password", text: $confirmedPassword)
-                    
-                    //Adapted from https://codewithchris.com/swiftui-picker-2023/
+
                     Picker(selection: $currentWeight, label: Text("Current Weight (kgs)")) {
                         ForEach(currentWeightOptions, id: \.self) { weight in
                             Text("\(weight)")
                         }
                     }
 
-                    //Adapted from https://codewithchris.com/swiftui-picker-2023/
                     Picker(selection: $goalWeight, label: Text("Goal Weight (kgs)")) {
                         ForEach(goalWeightOptions, id: \.self) { weight in
                             Text("\(weight)")
@@ -47,7 +45,7 @@ struct SignUpPageView: View {
             }
 
             Button("Continue") {
-                if isValid {
+                if isValidInput() {
                     loggedIn = true
                     UserDefaults.standard.set(username, forKey: "username")
                     UserDefaults.standard.set(email, forKey: "email")
@@ -58,6 +56,10 @@ struct SignUpPageView: View {
                 }
             }
             .buttonStyle(RoundedButtonStyle(isEnabled: isValid))
+            .foregroundColor(.white)
+            .background(isValid ? Color.green : Color.green)
+            .cornerRadius(25)
+            .opacity(isValid ? 1 : 0.5)
             .padding(.vertical)
         }
         .padding()
@@ -69,10 +71,11 @@ struct SignUpPageView: View {
             )
         }
     }
+
+    private func isValidInput() -> Bool {
+        return !username.isEmpty && !email.isEmpty && password.count >= 6 && password == confirmedPassword
+    }
 }
-
-
-
 
 struct InputField: View {
     var placeholder: String
@@ -82,9 +85,6 @@ struct InputField: View {
     var body: some View {
         TextField(placeholder, text: $text)
             .keyboardType(keyboardType)
-            .onChange(of: text) { _ in
-                // Perform input validation logic here
-            }
     }
 }
 
@@ -94,9 +94,6 @@ struct SecureInputField: View {
 
     var body: some View {
         SecureField(placeholder, text: $text)
-            .onChange(of: text) { _ in
-                // Perform input validation logic here
-            }
     }
 }
 
@@ -107,9 +104,6 @@ struct NumericInputField: View {
     var body: some View {
         TextField(placeholder, text: $text)
             .keyboardType(.numberPad)
-            .onChange(of: text) { _ in
-                // Perform input validation logic here
-            }
     }
 }
 
@@ -120,8 +114,7 @@ struct RoundedButtonStyle: ButtonStyle {
         configuration.label
             .padding()
             .frame(maxWidth: .infinity)
-            .foregroundColor(.white)
-            .background(isEnabled ? Color("AppColor") : Color.gray)
+            .background(isEnabled ? Color.green : Color.gray)
             .cornerRadius(25)
             .opacity(isEnabled ? 1 : 0.5)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)

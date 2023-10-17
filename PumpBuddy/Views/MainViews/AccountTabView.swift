@@ -21,6 +21,9 @@ struct AccountTabView: View {
     @AppStorage("goalWeight") var goalWeight: String = ""
     @State private var selectedImage: UIImage? // To store the selected image
     @State private var isImagePickerPresented: Bool = false
+    @State private var isEditWeightsSheetPresented: Bool = false
+    @State private var newCurrentWeight: String = ""
+    @State private var newGoalWeight: String = ""
 
     var body: some View {
         NavigationView {
@@ -77,6 +80,27 @@ struct AccountTabView: View {
                         .padding(.bottom)
 
                     Spacer()
+                    
+                    Button(action: {
+                        isEditWeightsSheetPresented.toggle()
+                    }) {
+                        Text("Edit Weights")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color("AppColor"))
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
+                            .padding(.bottom)
+                    }
+                    .sheet(isPresented: $isEditWeightsSheetPresented) {
+                        EditWeightsSheet(
+                            isSheetPresented: $isEditWeightsSheetPresented,
+                            currentWeight: $currentWeight,
+                            goalWeight: $goalWeight
+                        )
+                    }
+
+                    Spacer()
 
                     Section(header: Text("Workout History")) {
                         List {
@@ -97,6 +121,39 @@ struct AccountTabView: View {
                 for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+}
+
+
+struct EditWeightsSheet: View {
+    @Binding var isSheetPresented: Bool
+    @Binding var currentWeight: String
+    @Binding var goalWeight: String
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text("Edit Weights")) {
+                    TextField("Current Weight", text: $currentWeight)
+                        .keyboardType(.numberPad)
+                    
+                    TextField("Goal Weight", text: $goalWeight)
+                        .keyboardType(.numberPad)
+                }
+            }
+            .navigationBarTitle("Edit Weights")
+            .navigationBarItems(
+                leading: Button("Cancel") {
+                    isSheetPresented = false
+                },
+                trailing: Button("Save") {
+                    UserDefaults.standard.set(currentWeight, forKey: "currentWeight")
+                    UserDefaults.standard.set(goalWeight, forKey: "goalWeight")
+                    
+                    isSheetPresented = false
+                }
+            )
         }
     }
 }
