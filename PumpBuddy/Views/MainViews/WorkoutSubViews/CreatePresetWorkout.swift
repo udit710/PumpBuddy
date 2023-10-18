@@ -20,6 +20,8 @@ struct CreatePresetWorkout: View {
     
     @State var isWorkoutAdded = false
     @State private var showAlert = false
+    
+    @State private var reOrder = false
 
     
     
@@ -54,6 +56,16 @@ struct CreatePresetWorkout: View {
                         }
                     }
                     if exe.count > 0{
+                        HStack{
+                            Text("Exercises")
+                                .bold()
+                            Spacer()
+                            Image(systemName: "arrow.up.arrow.down")
+                                .onTapGesture{
+                                    reOrder.toggle()
+                                }
+                        }
+                        .padding(.horizontal)
                             ForEach(Array($exe.enumerated()), id: \.element.id) { index, e in
                                 HStack {
                                     if e.id != nil {
@@ -170,6 +182,9 @@ struct CreatePresetWorkout: View {
                     for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
             }
+        }
+        .popover(isPresented: $reOrder){
+            ReOrderExercise(exe: $exe)
         }
     }
     
