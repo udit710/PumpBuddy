@@ -10,6 +10,26 @@ import SwiftUI
 import Intents
 import CoreData
 
+enum units: String,CustomStringConvertible, CaseIterable, Encodable, Decodable{
+    case kg = "kg"
+    case lbs = "lbs"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    init?(stringValue: String) {
+        switch stringValue {
+        case "kg":
+            self = .kg
+        case "lbs":
+            self = .lbs
+        default:
+            return nil
+        }
+    }
+}
+
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), configuration: ConfigurationIntent())
@@ -46,32 +66,37 @@ struct WorkoutWidgetEntryView : View {
     var entry: Provider.Entry
     let encodedCurrWeight = UserDefaults(suiteName: "group.com.Udit.PumpBuddy")?.object(forKey: "currentWeight") as? Data
     let encodedGoalWeight = UserDefaults(suiteName: "group.com.Udit.PumpBuddy")?.object(forKey: "goalWeight") as? Data
+    let encodedUnits = UserDefaults(suiteName: "group.com.Udit.PumpBuddy")?.object(forKey: "defaultUnits") as? Data
 
         
     var body: some View {
         VStack{
 
 
-            if let currWeight = encodedCurrWeight, let goalWeight = encodedGoalWeight {
-                 let currDecoded = try? JSONDecoder().decode(Int.self, from: currWeight)
-                 let goalDecoded = try? JSONDecoder().decode(Int.self, from: goalWeight)
-                if let curr = currDecoded, let goal = goalDecoded{
+            if let currWeight = encodedCurrWeight, let goalWeight = encodedGoalWeight, let unitWeight = encodedUnits {
+                if let currDecoded = try? JSONDecoder().decode(Double.self, from: currWeight),
+                   let goalDecoded = try? JSONDecoder().decode(Double.self, from: goalWeight),
+                   let unitDecoded = try? JSONDecoder().decode(units.self, from: unitWeight){
+                 let curr = String(format: "%.2f", currDecoded)
+                    let goal = String(format: "%.2f", goalDecoded)
+                    let unit = unitDecoded
                     // You successfully retrieved your car object!
                     VStack{
                         HStack{
                             Image(systemName: "dumbbell")
-                            Text("Current weight: \(curr)kg")
+                            Text("Current weight: \(curr)\(unit.description)")
                             Image(systemName: "dumbbell")
                         }
                         Divider()
-                        if goal < curr{
-                            Text("You need to lose \(curr-goal)kg to acheive your goal weight of \(goal)kg")
-                        }
-                        else if goal > curr{
-                            Text("You need to gain \(goal-curr)kg to acheive your goal weight of \(goal)kg")
-                        }else if goal == curr{
-                            Text("Bravo! You are at your goal weight of \(goal)kg")
-                        }
+                                    if goalDecoded < currDecoded {
+                                        let difference = String(format: "%.2f", currDecoded - goalDecoded)
+                                        Text("You need to lose \(difference)\(unit.description) to achieve your goal weight of \(goal)\(unit.description)")
+                                    } else if goalDecoded > currDecoded {
+                                        let difference = String(format: "%.2f", goalDecoded - currDecoded)
+                                        Text("You need to gain \(difference)\(unit.description) to achieve your goal weight of \(goal)\(unit.description)")
+                                    } else {
+                                        Text("Bravo! You are at your goal weight of \(goal)\(unit.description)")
+                                    }
                     }
                     .padding()
                 }

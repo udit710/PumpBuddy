@@ -6,14 +6,48 @@
 //
 import SwiftUI
 
+enum units: String,CustomStringConvertible, CaseIterable, Encodable{
+    case kg = "kg"
+    case lbs = "lbs"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    init?(stringValue: String) {
+        switch stringValue {
+        case "kg":
+            self = .kg
+        case "lbs":
+            self = .lbs
+        default:
+            return nil
+        }
+    }
+}
+
+func convertWeight(weight: Double, unit: String) -> (Double,String) {
+    var newWeight : Double = 0
+    var newUnit : String = "kg"
+    if unit == "lbs"{
+        newWeight = Double(weight) / 2.20
+        newUnit = "kg"
+    } else if unit == "kg"{
+        newWeight = Double(weight) * 2.20
+        newUnit = "lbs"
+    }
+    return (Double(newWeight), newUnit)
+}
+
 struct SignUpPageView: View {
     @Environment(\.colorScheme) var colorScheme
     @AppStorage("username") var username: String = ""
     @AppStorage("email") var email: String = ""
     @AppStorage("password") var password: String = ""
     @AppStorage("confirmedPassword") var confirmedPassword: String = ""
-    @AppStorage("currentWeight") var currentWeight: Int = 150
-    @AppStorage("goalWeight") var goalWeight: Int = 150
+    @AppStorage("currentWeight") var currentWeight: Double = 150
+    @AppStorage("goalWeight") var goalWeight: Double = 150
+    @AppStorage("defaultUnits") var defaultUnits: units =  units.kg
 
     @State private var showInvalidInputAlert = false
     @State private var isNavigatingToHome = false
@@ -22,6 +56,7 @@ struct SignUpPageView: View {
     @State private var currentWeightOptions: [Int] = Array(40...300)
     @State private var goalWeightOptions: [Int] = Array(40...300)
 
+    
     var body: some View {
         VStack(spacing: 20) {
             Form {
@@ -31,15 +66,21 @@ struct SignUpPageView: View {
                     SecureInputField(placeholder: "Password", text: $password)
                     SecureInputField(placeholder: "Confirm Password", text: $confirmedPassword)
 
-                    Picker(selection: $currentWeight, label: Text("Current Weight (kgs)")) {
+                    Picker(selection: $currentWeight, label: Text("Current Weight (\(defaultUnits.description))")) {
                         ForEach(currentWeightOptions, id: \.self) { weight in
                             Text("\(weight)")
                         }
                     }
 
-                    Picker(selection: $goalWeight, label: Text("Goal Weight (kgs)")) {
+                    Picker(selection: $goalWeight, label: Text("Goal Weight (\(defaultUnits.description))")) {
                         ForEach(goalWeightOptions, id: \.self) { weight in
                             Text("\(weight)")
+                        }
+                    }
+                    
+                    Picker(selection: $defaultUnits, label:Text("Select units")){
+                        ForEach(units.allCases, id: \.self){unit in
+                            Text("\(unit.description)")
                         }
                     }
                 }
@@ -57,6 +98,8 @@ struct SignUpPageView: View {
                     UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_goal_weight, forKey: "goalWeight")
                     let _password = try! JSONEncoder().encode(password)
                     UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_password, forKey: "password")
+                    let _units = try! JSONEncoder().encode(defaultUnits)
+                    UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_units, forKey: "defaultUnits")
 
                     // Set the loggedIn flag
                     UserDefaults.standard.set(true, forKey: "loggedIn")
