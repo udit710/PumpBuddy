@@ -23,6 +23,7 @@ extension Workout {
     @NSManaged public var describe: String?
     @NSManaged public var isFavourite: Bool
     @NSManaged public var exercises: NSSet?
+    @NSManaged public var units: String?
 
 }
 

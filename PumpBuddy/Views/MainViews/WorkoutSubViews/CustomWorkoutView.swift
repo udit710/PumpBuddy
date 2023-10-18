@@ -34,6 +34,7 @@ struct CustomWorkoutView: View {
     
     @State private var reOrder = false
 
+    @AppStorage("defaultUnits") var selectedUnit: units = .kg
     
     
     // Array to temporarily store exercises performed
@@ -85,6 +86,7 @@ struct CustomWorkoutView: View {
                                 }
                         }
                         .padding(.horizontal)
+                        Divider()
                             ForEach(Array($exe.enumerated()), id: \.element.id) { index, e in
                                 VStack {
                                     if e.id != nil {
@@ -149,6 +151,7 @@ struct CustomWorkoutView: View {
                                 newWorkout.date = Date()
                                 newWorkout.isFavourite = isFavourite
                                 newWorkout.describe = workoutNotes
+                                newWorkout.units = selectedUnit.description
                                 
                                 try? moc.save()
                                 isWorkoutAdded = true
@@ -241,7 +244,7 @@ struct ShowExercise: View{
     @Environment(\.managedObjectContext) var moc
     @Environment(\.colorScheme) var colorScheme
     
-    @State var weightHeader = "Weight"
+    @State var weightHeader = ""
     @State var repsHeader = "Reps"
     
     @State var popUp = false
@@ -251,7 +254,8 @@ struct ShowExercise: View{
     @State private var showAlert3 = false
     
     @State var sets : [Set] = []
-    
+    @AppStorage("defaultUnits") var selectedUnit: units = .kg
+
     var body: some View{
         VStack(alignment: .leading) {
             HStack{
@@ -297,16 +301,6 @@ struct ShowExercise: View{
                 .alert("Exercise already added!", isPresented: $showAlert3){
                     Button("OK", role: .cancel) {}
                 }
-                
-                //                Button(exercise.isDone ? "Added!" : "Done"){
-                //                    let setsArray: NSSet = NSSet(array: sets)
-                //                    exercise.sets = setsArray
-                //
-                //                    try? moc.save()
-                //
-//                    exercise.isDone = true
-//                }
-//                .disabled(sets.count == 0 || !sets.allSatisfy { $0.isDone } || exercise.isDone)
             }
             .padding(.all)
             .frame(maxWidth: .infinity)
@@ -317,7 +311,7 @@ struct ShowExercise: View{
                 HStack{
                     Text("#")
                     Divider()
-                    TextField("Weight", text: $weightHeader)
+                    TextField("Weight (\(selectedUnit.description))", text: $weightHeader)
                         .disabled(true)
                     Divider()
                     TextField("Reps", text: $repsHeader)

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		541C3B892ADE73AE00C33A91 /* WorkoutWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541C3B882ADE73AE00C33A91 /* WorkoutWidget.swift */; };
 		542956522A95FE9B007C9658 /* CustomWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542956512A95FE9B007C9658 /* CustomWorkoutView.swift */; };
 		54F562FC2ADF82EA002F6239 /* PumpBuddyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB6C2A811B2B0016769A /* PumpBuddyTests.swift */; };
 		DD09CB5C2A811B2A0016769A /* PumpBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB5B2A811B2A0016769A /* PumpBuddyApp.swift */; };
@@ -98,7 +97,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		541C3B882ADE73AE00C33A91 /* WorkoutWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutWidget.swift; sourceTree = "<group>"; };
 		541C3B902ADE73EC00C33A91 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		541C3B922ADE73EC00C33A91 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		542956512A95FE9B007C9658 /* CustomWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWorkoutView.swift; sourceTree = "<group>"; };
@@ -352,7 +350,6 @@
 			children = (
 				DDEF9EA22A89ED1A0071B30C /* HomePageView.swift */,
 				DD837B1F2A947E0200C10CDC /* WorkoutTabView.swift */,
-				541C3B882ADE73AE00C33A91 /* WorkoutWidget.swift */,
 				DD837B212A947E7200C10CDC /* AccountTabView.swift */,
 				DD837B252A94898E00C10CDC /* HomeSubviews */,
 				DD3515A62A99827500509143 /* WorkoutSubViews */,
@@ -533,7 +530,6 @@
 				DDECEE602AD4E95100423590 /* Workout+CoreDataClass.swift in Sources */,
 				DD3515A82A99A2EE00509143 /* SearchExercises.swift in Sources */,
 				DDD9506C2ADAE4CC00A72203 /* PresetWorkout+CoreDataClass.swift in Sources */,
-				541C3B892ADE73AE00C33A91 /* WorkoutWidget.swift in Sources */,
 				DD17262F2ADEC32300ED4AF6 /* WorkoutWidget.intentdefinition in Sources */,
 				DDECEE452AD4441200423590 /* Persistence.swift in Sources */,
 				DD1767132AD62FC900A8D758 /* ExerciseDetailsView.swift in Sources */,

@@ -34,12 +34,6 @@ struct WorkoutHistoryView: View {
     var body: some View {
         NavigationView {
             VStack {
-//                NavigationLink(destination: Text("Add Workout")) {
-//                    Image(systemName: "plus")
-//                        .foregroundColor(.white)
-//                        .padding()
-//                }
-//                .padding(.horizontal)
 
                 List {
                     ForEach(workouts, id: \.id) { workout in
@@ -153,6 +147,8 @@ struct ExerciseDetailView: View {
 struct SetDetailView: View {
     var sets: [Set]
     @Environment(\.colorScheme) var colorScheme
+    var units: String
+
 
     var body: some View {
         VStack{
@@ -164,7 +160,7 @@ struct SetDetailView: View {
                         HStack {
                             Text("\(index + 1)")
                             Divider()
-                            Text(String(format: "%.2f", weight))
+                            Text(String(format: "%.2f \(units)", weight))
                             Spacer()
                             Divider()
                             Text(String(reps))
@@ -185,7 +181,7 @@ struct SetDetailView: View {
 struct WorkoutDetailView: View {
     var workout: Workout
     @State var popUp = false
-
+    @AppStorage("defaultUnits") var selectedUnit: units = .kg
 
     
     var body: some View {
@@ -235,14 +231,14 @@ struct WorkoutDetailView: View {
 //                }.background(colorScheme == .dark ? .black : .white)
     //                ScrollView{
                         if let exerciseArray = workout.exercises?.allObjects as? [ExercisePerformed] {
-                            ForEach(exerciseArray.reversed(), id: \.self) { exercise in
+                            ForEach(exerciseArray, id: \.self) { exercise in
                                 VStack{
                                     HStack{
                                         ExerciseDetailView(exercise: exercise)
                                     }
 //                                    .padding(.horizontal)
                                     if let sets = exercise.sets?.allObjects as? [Set] {
-                                        SetDetailView(sets: sets.reversed())
+                                        SetDetailView(sets: sets, units: workout.units ?? "\(selectedUnit.description)")
                                     }
                                 }
                                 .padding(.horizontal)

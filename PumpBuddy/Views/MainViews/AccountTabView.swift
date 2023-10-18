@@ -137,10 +137,10 @@ struct AccountTabView: View {
 
                     Text("Hello, \(username)!")
                         .font(.title)
-                        .foregroundColor(.black)
+//                        .foregroundColor(.black)
 
                     Text("Email: \(email)")
-                        .foregroundColor(.black)
+//                        .foregroundColor(.black)
                         .font(.headline)
                         .padding(.bottom)
 
@@ -149,11 +149,11 @@ struct AccountTabView: View {
                         let goalWeightFormatted = String(format: "%.2f", goalWeightDouble)
 
                         Text("Current Weight: \(currentWeightFormatted)\(selectedUnit.description)")
-                            .foregroundColor(.black)
+//                            .foregroundColor(.black)
                             .font(.headline)
 
                         Text("Goal Weight: \(goalWeightFormatted)\(selectedUnit.description)")
-                            .foregroundColor(.black)
+//                            .foregroundColor(.black)
                             .font(.headline)
                             .padding(.bottom)
                     }
@@ -201,7 +201,6 @@ struct AccountTabView: View {
                                     NavigationLink(destination: WorkoutDetailView(workout: workout)) {
                                         WorkoutCardView(workout: workout)
                                     }
-                                    .listRowBackground(Color.white)
                                 }
                             }
                             .listStyle(PlainListStyle())
