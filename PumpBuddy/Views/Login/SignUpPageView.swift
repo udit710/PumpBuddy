@@ -124,7 +124,7 @@ struct SignUpPageView: View {
             .foregroundColor(.white)
             .background(isValid ? Color.green : Color.gray)
             .cornerRadius(25)
-            .opacity(isValid ? 1 : 0.5)
+            .opacity(isValid ? 1 : 1)
             .padding(.vertical)
             .fullScreenCover(isPresented: $isNavigatingToHome, content: {
                 HomePageView()
@@ -135,7 +135,7 @@ struct SignUpPageView: View {
         .alert(isPresented: $showInvalidInputAlert) {
             Alert(
                 title: Text("Invalid Input"),
-                message: Text("Please fill in all fields and ensure they meet the required criteria."),
+                message: Text("Please make sure email is in correct form and passwords match"),
                 dismissButton: .default(Text("OK"))
             )
         }
@@ -184,10 +184,9 @@ struct RoundedButtonStyle: ButtonStyle {
         configuration.label
             .padding()
             .frame(maxWidth: .infinity)
-            .background(isEnabled ? Color.green : Color.gray)
+            .background(isEnabled ? Color.green : Color.green)
             .cornerRadius(25)
-            .opacity(isEnabled ? 1 : 0.5)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .opacity(isEnabled ? 1 : 1)
     }
 }
 

@@ -70,7 +70,7 @@ struct AccountTabView: View {
         //used to sort ascending
         sortDescriptors: [NSSortDescriptor(keyPath: \Workout.date, ascending: false)],
         animation: .default)
-    private var workouts: FetchedResults<Workout>
+    var workouts: FetchedResults<Workout>
     @AppStorage("username") var username: String = ""
     @AppStorage("email") var email: String = ""
     @AppStorage("currentWeight") var currentWeight: String = ""
@@ -83,7 +83,7 @@ struct AccountTabView: View {
 
     @State private var selectedImage: UIImage? // To store the selected image
     @State private var isImagePickerPresented: Bool = false
-    @State private var isEditWeightsSheetPresented: Bool = false
+    @State var isEditWeightsSheetPresented: Bool = false
     @State private var revealPwd: Bool = false
     @State private var isChangeOn: Bool = false
     @State private var newCurrentWeight: String = ""

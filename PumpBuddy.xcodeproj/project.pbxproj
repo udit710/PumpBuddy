@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		541C3B892ADE73AE00C33A91 /* WorkoutWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541C3B882ADE73AE00C33A91 /* WorkoutWidget.swift */; };
 		542956522A95FE9B007C9658 /* CustomWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542956512A95FE9B007C9658 /* CustomWorkoutView.swift */; };
+		54F562FC2ADF82EA002F6239 /* PumpBuddyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB6C2A811B2B0016769A /* PumpBuddyTests.swift */; };
 		DD09CB5C2A811B2A0016769A /* PumpBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB5B2A811B2A0016769A /* PumpBuddyApp.swift */; };
 		DD09CB5E2A811B2A0016769A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB5D2A811B2A0016769A /* ContentView.swift */; };
 		DD09CB602A811B2B0016769A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD09CB5F2A811B2B0016769A /* Assets.xcassets */; };
 		DD09CB632A811B2B0016769A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD09CB622A811B2B0016769A /* Preview Assets.xcassets */; };
-		DD09CB6D2A811B2B0016769A /* PumpBuddyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB6C2A811B2B0016769A /* PumpBuddyTests.swift */; };
 		DD09CB772A811B2B0016769A /* PumpBuddyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB762A811B2B0016769A /* PumpBuddyUITests.swift */; };
 		DD09CB792A811B2B0016769A /* PumpBuddyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB782A811B2B0016769A /* PumpBuddyUITestsLaunchTests.swift */; };
 		DD09CB892A8123DA0016769A /* IntroPage1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09CB882A8123DA0016769A /* IntroPage1View.swift */; };
@@ -102,6 +102,7 @@
 		541C3B902ADE73EC00C33A91 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		541C3B922ADE73EC00C33A91 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		542956512A95FE9B007C9658 /* CustomWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWorkoutView.swift; sourceTree = "<group>"; };
+		54F562FD2ADF8361002F6239 /* PumpBuddy-test.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PumpBuddy-test.xctestplan"; sourceTree = "<group>"; };
 		DD09CB582A811B2A0016769A /* PumpBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PumpBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD09CB5B2A811B2A0016769A /* PumpBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpBuddyApp.swift; sourceTree = "<group>"; };
 		DD09CB5D2A811B2A0016769A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -199,6 +200,7 @@
 		DD09CB4F2A811B2A0016769A = {
 			isa = PBXGroup;
 			children = (
+				54F562FD2ADF8361002F6239 /* PumpBuddy-test.xctestplan */,
 				DD6152C22ADED4400076A6F7 /* WorkoutWidgetExtension.entitlements */,
 				DD09CB5A2A811B2A0016769A /* PumpBuddy */,
 				DD09CB6B2A811B2B0016769A /* PumpBuddyTests */,
@@ -561,7 +563,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD09CB6D2A811B2B0016769A /* PumpBuddyTests.swift in Sources */,
+				54F562FC2ADF82EA002F6239 /* PumpBuddyTests.swift in Sources */,
 				DD6152BE2ADED04F0076A6F7 /* WorkoutData.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

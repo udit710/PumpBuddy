@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "D7118495-EC82-493D-A70C-18277B528292",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PumpBuddy.xcodeproj",
+      "identifier" : "DD09CB572A811B2A0016769A",
+      "name" : "PumpBuddy"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:PumpBuddy.xcodeproj",
+        "identifier" : "DD09CB672A811B2B0016769A",
+        "name" : "PumpBuddyTests"
+      }
+    }
+  ],
+  "version" : 1
+}
