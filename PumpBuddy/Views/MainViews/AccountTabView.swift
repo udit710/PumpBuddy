@@ -411,7 +411,6 @@ struct AccountTabView_Previews: PreviewProvider {
 }
 
 func saveImage(imageName: String, image: UIImage){
-    let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     let url = documents.appendingPathComponent("\(imageName)")
     if let data = image.pngData() {
