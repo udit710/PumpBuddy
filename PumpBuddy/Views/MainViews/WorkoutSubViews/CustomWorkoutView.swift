@@ -31,6 +31,8 @@ struct CustomWorkoutView: View {
     @State private var alert2 = false
     @State private var alert3 = false
     @State private var alert4 = false
+    
+    @State private var reOrder = false
 
     
     
@@ -77,6 +79,10 @@ struct CustomWorkoutView: View {
                             Text("Exercises")
                                 .bold()
                             Spacer()
+                            Image(systemName: "arrow.up.arrow.down")
+                                .onTapGesture{
+                                    reOrder.toggle()
+                                }
                         }
                         .padding(.horizontal)
                             ForEach(Array($exe.enumerated()), id: \.element.id) { index, e in
@@ -186,6 +192,9 @@ struct CustomWorkoutView: View {
             }
 
         }
+        .popover(isPresented: $reOrder){
+            ReOrderExercise(exe: $exe)
+        }
     }
     
     
@@ -202,6 +211,29 @@ struct CustomWorkoutView: View {
     }
     
     
+}
+
+
+struct ReOrderExercise: View {
+    @Binding var exe: [ExercisePerformed]
+    
+    var body: some View{
+        NavigationStack{
+            List{
+                ForEach(exe){e in
+                    Text(e.exercise?.name ?? "Exercise")
+                }
+                .onMove{ (indexSet, index) in
+                    self.exe.move(fromOffsets: indexSet, toOffset: index)
+                }
+            }
+            .navigationTitle("Exercises")
+            .toolbar{
+                EditButton()
+            }
+        }
+        
+    }
 }
 
 struct ShowExercise: View{
