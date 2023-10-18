@@ -10,6 +10,60 @@ import UIKit
 import WidgetKit
 import Photos
 
+
+struct WeightUpdate: Codable, Hashable{
+    let weight: Double
+    let date: Date
+    let units: String
+    
+    var formattedDate: String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM"
+            return dateFormatter.string(from: date)
+        }
+}
+
+func saveToPlist(weightUpdates: [WeightUpdate]){
+
+    // Define a file URL for the plist
+    let plistURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("weightUpdates.plist")
+
+    // Encode and save the data to the plist file
+    do {
+        let encoder = PropertyListEncoder()
+        let data = try encoder.encode(weightUpdates)
+        try data.write(to: plistURL)
+    } catch {
+        print("Error saving data to plist: \(error)")
+    }
+    
+}
+
+func loadPlist() -> [WeightUpdate]{
+    let plistURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("weightUpdates.plist")
+
+    var weightUpdates: [WeightUpdate] = []
+    if let data = try? Data(contentsOf: plistURL) {
+        let decoder = PropertyListDecoder()
+        if let loadedUpdates = try? decoder.decode([WeightUpdate].self, from: data) {
+            weightUpdates = loadedUpdates
+        }
+    }
+    return weightUpdates
+}
+
+func appendToPlist(newWeightUpdate: WeightUpdate) {
+    // Load the existing data from the plist
+    var weightUpdates = loadPlist()
+    
+    // Append the new data
+    weightUpdates.append(newWeightUpdate)
+    
+    // Save the updated array back to the plist
+    saveToPlist(weightUpdates: weightUpdates)
+}
+
+
 struct AccountTabView: View {
     @FetchRequest(
         //adapted from https://stackoverflow.com/questions/26883270/swift-sort-array-by-sort-descriptors
@@ -23,7 +77,9 @@ struct AccountTabView: View {
     @AppStorage("goalWeight") var goalWeight: String = ""
     @AppStorage("password") var password: String = ""
     @AppStorage("confirmedPassword") var confirmedPassword: String = ""
-    @AppStorage("defaultUnits") var selectedUnit: units =  .kg
+    @AppStorage("defaultUnits") var selectedUnit: units = .kg
+    
+    @State private var weightUpdates: [WeightUpdate] = []
 
     @State private var selectedImage: UIImage? // To store the selected image
     @State private var isImagePickerPresented: Bool = false
@@ -181,15 +237,22 @@ struct AccountTabView: View {
                         UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_goal_weight, forKey: "goalWeight")
                         let _unit = try! JSONEncoder().encode(selectedUnit)
                         UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_unit, forKey: "defaultUnits")
+                        
+                        let newWeightUpdate = WeightUpdate(weight: Double(currentWeight) ?? 0, date: Date(), units: selectedUnit.description)
+                        appendToPlist(newWeightUpdate: newWeightUpdate)
+                        
                         WidgetCenter.shared.reloadTimelines(ofKind: "WorkoutWidget")
                         WidgetCenter.shared.reloadAllTimelines()
-                        print("Widget")
+                        
                     }
                 }
         .onChange(of: selectedImage){img in
             if (img != nil){
                 saveImage(imageName: selectedImageName ?? "img.png", image: selectedImage ?? UIImage(systemName: "person.fill")!)
             }
+        }
+        .onAppear{
+            weightUpdates = loadPlist()
         }
     }
     

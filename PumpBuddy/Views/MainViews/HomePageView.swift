@@ -74,24 +74,15 @@ struct HomeView: View{
                     }
                     
                     HStack {
-                        Text("Explore")
+                        Text("Your Progress")
                             .font(.largeTitle)
                             .bold()
                             .padding(.leading)
                         Spacer()
-                        //Navigate to explorepageview
-                        NavigationLink{
-                            ExplorePageView()
-                        }label: {
-                            //Display link to exploremore with more
-                            Text("more...")
-                                .underline()
-                                .padding(.trailing)
-                        }
                         
                     }
                     
-                    ExploreOverview()
+                    GoalProgressView()
                     Spacer()
                 }
                 .navigationBarTitleDisplayMode(.inline)

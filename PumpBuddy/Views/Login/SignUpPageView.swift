@@ -45,9 +45,12 @@ struct SignUpPageView: View {
     @AppStorage("email") var email: String = ""
     @AppStorage("password") var password: String = ""
     @AppStorage("confirmedPassword") var confirmedPassword: String = ""
-    @AppStorage("currentWeight") var currentWeight: Double = 150
-    @AppStorage("goalWeight") var goalWeight: Double = 150
+    @AppStorage("currentWeight") var finalCurrentWeight: String = ""
+    @AppStorage("goalWeight") var finalGoalWeight: String = ""
     @AppStorage("defaultUnits") var defaultUnits: units =  units.kg
+    
+    @State private var currentWeight: Int = 150
+    @State private var goalWeight: Int = 150
 
     @State private var showInvalidInputAlert = false
     @State private var isNavigatingToHome = false
@@ -56,6 +59,7 @@ struct SignUpPageView: View {
     @State private var currentWeightOptions: [Int] = Array(40...300)
     @State private var goalWeightOptions: [Int] = Array(40...300)
 
+    @State private var weightUpdates: [WeightUpdate] = []
     
     var body: some View {
         VStack(spacing: 20) {
@@ -88,13 +92,15 @@ struct SignUpPageView: View {
 
             Button("Continue") {
                 if isValidInput() {
+                    finalGoalWeight = String(goalWeight)
+                    finalCurrentWeight = String(currentWeight)
                     let _user_name = try! JSONEncoder().encode(username)
                     UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_user_name, forKey: "username")
                     let _email = try! JSONEncoder().encode(email)
                     UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_email, forKey: "email")
-                    let _curr_weight = try! JSONEncoder().encode(currentWeight)
+                    let _curr_weight = try! JSONEncoder().encode(finalCurrentWeight)
                     UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_curr_weight, forKey: "currentWeight")
-                    let _goal_weight = try! JSONEncoder().encode(goalWeight)
+                    let _goal_weight = try! JSONEncoder().encode(finalGoalWeight)
                     UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_goal_weight, forKey: "goalWeight")
                     let _password = try! JSONEncoder().encode(password)
                     UserDefaults(suiteName: "group.com.Udit.PumpBuddy")!.set(_password, forKey: "password")
@@ -103,6 +109,10 @@ struct SignUpPageView: View {
 
                     // Set the loggedIn flag
                     UserDefaults.standard.set(true, forKey: "loggedIn")
+                    
+                    weightUpdates.append(WeightUpdate(weight: Double(currentWeight), date: Date(), units: defaultUnits.description))
+                    
+                    saveToPlist(weightUpdates: weightUpdates)
 
                     // Navigate to the home page
                     isNavigatingToHome = true
