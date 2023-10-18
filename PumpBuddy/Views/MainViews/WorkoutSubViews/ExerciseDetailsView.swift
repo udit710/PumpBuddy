@@ -7,14 +7,11 @@
 
 import SwiftUI
 
+/// A View to display the exercise details in depth
+/// *Displays: Name, muscle group, type and instructions*
 struct ExerciseDetailsView: View {
-//    @NSManaged public var id: UUID?
-//    @NSManaged public var name: String?
-//    @NSManaged public var instructions: String?
-//    @NSManaged public var type: String?
-//    @NSManaged public var muscles: String?
-//    @NSManaged public var isFavourite: Bool
-//    @NSManaged public var exercisePerformed: NSSet?
+
+    /// An ``Exercise``object fetched from the **API**
     var exercise : Exercise = Exercise()
     var body: some View {
         VStack{

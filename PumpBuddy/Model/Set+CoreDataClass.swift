@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 
+/// Set for an ``ExercisePerformed`` by user
 public class Set: NSManagedObject {
 
 }

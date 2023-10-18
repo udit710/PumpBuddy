@@ -9,30 +9,51 @@ import SwiftUI
 
 //This view allows user to search and add workouts
 struct SearchExercises: View {
+    
+    /// Environment variable for CoreData operations
     @Environment(\.managedObjectContext) var moc
+    
+    /// Environment variable to get background mode
     @Environment(\.colorScheme) var colorScheme
 
+    /// An array of exercises to parse **JSON** data received from **API** call
     @State var tempEx: [ExerciseModel] = []
 
+    /// A ``JsonModel`` object to fetch API data
     @State var jsonObj = JsonModel()
 
+    /// Text entered in search bar
     @State var searchText = ""
-    @State var exercises: [Exercise] = []
-//    @FetchRequest(entity: Exercise.entity(), sortDescriptors: []) var exercises: FetchedResults<Exercise>
     
+    /// An array of parsed ``Exercise`` objects
+    @State var exercises: [Exercise] = []
+    
+    /// A **Binding** array of ``ExercisePerformed`` objects to add to workout
     @Binding var exercisesAdded : [ExercisePerformed]
+    
+    /// A variable to filter the type of search for exercises
+    /// In this context, search results can be based on **Muscle Groups**, ** Type** or **Difficulty** of exercise
     @State var dataNeeded: String = ""
+    
+    /// The parameter based on ``dataNeeded``
+    /// Example, for Muscle, ``dataFor`` can be *Biceps*
     @State var dataFor: String = ""
+    
+    /// The options that can be used for ``dataNeeded``
     let dataReq = [
         "muscle",
         "type",
         "difficulty"
     ]
+    
+    /// Types of difficulties
     let difficulty = [
         "beginner",
         "intermediate",
         "expert"
     ]
+    
+    /// Types of exercise types
     let types = [
         "cardio",
         "olympic_weightlifting",
@@ -42,6 +63,8 @@ struct SearchExercises: View {
         "stretching",
         "strongman"
     ]
+    
+    /// Types of Muscle Groups
     let muscleGroups = [
         "abdominals",
         "abductors",
@@ -60,11 +83,11 @@ struct SearchExercises: View {
         "traps",
         "triceps"
     ]
-    
-    @State var DATAHERE: String = "Not here"
 
+    /// State variable to check if data is loaded
     @State var isDataLoaded: Bool = false
 
+    /// A filtered list for matching search results
     var filteredExercises: [Exercise]{
         guard !searchText.isEmpty else { return exercises}
         return exercises.filter{$0.name!.localizedCaseInsensitiveContains(searchText)}
@@ -87,7 +110,6 @@ struct SearchExercises: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             Menu{
-//                ToolbarItem(placement: .navigationBarLeading){
                     Picker("Search By", selection: $dataNeeded){
                         Text("Search By")
                         ForEach(dataReq, id: \.self){
@@ -96,12 +118,8 @@ struct SearchExercises: View {
                     }
                     .background(Color("AppColor"))
                     .cornerRadius(20)
-//                }
-//                ToolbarItem(placement: .navigationBarTrailing){
-//                    Menu {
                         if dataNeeded == "muscle"{
                             Picker("Muscle", selection: $dataFor){
-    //                            Text("Select")
                                 ForEach(muscleGroups, id: \.self){
                                     Text($0.localizedCapitalized)
                                 }
@@ -110,7 +128,6 @@ struct SearchExercises: View {
                             .cornerRadius(20)
                         }else if dataNeeded == "type"{
                             Picker("Type", selection: $dataFor){
-    //                            Text("Select")
                                 ForEach(types, id: \.self){
                                     Text($0.localizedCapitalized)
                                 }
@@ -119,7 +136,6 @@ struct SearchExercises: View {
                             .cornerRadius(20)
                         } else if dataNeeded == "difficulty" {
                             Picker("Difficulty", selection: $dataFor){
-    //                            Text("Select")
                                 ForEach(difficulty, id: \.self){
                                     Text($0.localizedCapitalized)
                                 }
@@ -127,28 +143,20 @@ struct SearchExercises: View {
                             .background(.red)
                             .cornerRadius(20)
                         }
-                //                    } label: {
-                //                        Label("Select \(dataNeeded)", systemImage: "list.bullet")
-                //                    }
-                //                }
             } label: {
                 Label("more", systemImage: "ellipsis.circle")
             }
         }
         .onAppear{
-            //            tempEx = jsonObj.fetchData(dataNeeded: dataNeeded, dataFor: dataFor, context: moc)
-            //            exercises = jsonObj.showData(data: tempEx, context: moc)
             isDataLoaded = true
         }
         .onChange(of: dataFor) { _ in
-            // This will set isDataLoaded to true whenever exercises change
             
             if !dataFor.isEmpty{
                 Task{
                     do{
                         tempEx = try await jsonObj.fetchData(dataNeeded: dataNeeded, dataFor: dataFor, context: moc)
                         exercises = jsonObj.showData(data: tempEx, context: moc)
-                        DATAHERE = "Data is here"
                     } catch {
                         print("Error while fetching data")
                     }
@@ -157,6 +165,8 @@ struct SearchExercises: View {
         }
     }
     
+    /// Function to add exercise to workout as an ``ExercisePerformed`` variable
+    /// - Parameter ex: An ``Exercise`` variable that is to be added to the workout
     func appendExercise(ex: Exercise){
         let newEx = ExercisePerformed(context: moc)
         newEx.id = UUID()
@@ -168,6 +178,9 @@ struct SearchExercises: View {
         exercisesAdded.append(newEx)
     }
     
+    
+    /// Function to remove an added exercise on unselection in view
+    /// - Parameter ex: exercise that is to be removed
     func deleteExercise(ex: Exercise){
         exercisesAdded.removeAll{ exercise in
             return exercise.exercise == ex
@@ -182,15 +195,31 @@ struct SearchExercises_Previews: PreviewProvider {
 }
 
 
+/// Exercise card Displaying brief information about the exercise
 struct ExerciseCard: View {
+    
+    /// Exercise variable
     var ex: Exercise
+    
+    /// Binding array of exercises added
     @Binding var exercisesAdded : [ExercisePerformed]
+    
+    /// Temporary array of ``Exercise`` objects to be converted to ``ExercisePerformed``
     var tempExercises : [ExercisePerformed] = []
+    
+    /// Refer to ``SearchExercises/appendExercise(ex:)``
     var appendExercise: (Exercise) -> Void
+    
+    /// Refer to ``SearchExercises/deleteExercise(ex:)``
     var deleteExercise: (Exercise) -> Void
     
+    /// State variable to know if exercise is clicked on
+    /// For addition to ``tempExercises``
     @State var clicked: Bool = false
+    
+    /// State variable to display exercise information in detail
     @State var popUp = false
+    
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
@@ -241,6 +270,7 @@ struct ExerciseCard: View {
 }
 
 
+/// View to be displayed while loading the exercises
 struct ProcessView: View{
     var text: String
     var body: some View{

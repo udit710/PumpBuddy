@@ -6,42 +6,58 @@
 //
 import SwiftUI
 
-//View to add a workout
+/// Page to log a wokout that is currently in session
 struct CustomWorkoutView: View {
+    ///Environment variable to get background mode
     @Environment(\.colorScheme) var colorScheme
+
+    ///Environment variable for CoreData
     @Environment(\.managedObjectContext) var moc
     
+    ///Fetch ``Workout`` data from CoreData
     @FetchRequest(entity: Workout.entity(), sortDescriptors: []) var works: FetchedResults<Workout>
     
+    ///Title of the workout
     @State var workoutTitle: String = ""
+    
+    /// Any Notes for the workout
     @State var workoutNotes: String = ""
     
+    ///Start time of the workout
     @State private var startTime: Date?
+    
+    ///End time of the workout
     @State private var endTime: Date?
+    
+    ///Duration of the workout
     @State private var timeInterval: Double?
     
+    ///Variable to make the workout favourite
     @State private var isFavourite: Bool = false
     
+    /// Timer to update duration on view
+    /// Adapted from ``// https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-a-timer-with-swiftui``
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    // https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-a-timer-with-swiftui
     
+    ///State variable to check if workout is added
     @State var isWorkoutAdded = false
     
+    /// Alert variables for different scenarios
     @State private var alert1 = false
     @State private var alert2 = false
     @State private var alert3 = false
     @State private var alert4 = false
     
+    ///State variable to enable re-ordering of exercises
     @State private var reOrder = false
 
+    ///Variable to store default units set by user
     @AppStorage("defaultUnits") var selectedUnit: units = .kg
     
-    
-    // Array to temporarily store exercises performed
+    /// Array to temporarily store ``ExercisePerformed`` type variables
     @State var exe : [ExercisePerformed] = []
+    
     var body: some View {
-        
-        
         
         NavigationStack{
             ScrollView{
@@ -185,7 +201,6 @@ struct CustomWorkoutView: View {
                         }.alert("Workout title empty!", isPresented: $alert4){
                             Button("OK", role: .cancel) {}
                         }
-//                        .disabled(isWorkoutAdded || !exe.allSatisfy { $0.isDone } || exe.count == 0 || workoutTitle.isEmpty)
                     }
                 }
                 .toolbarBackground(
@@ -207,6 +222,7 @@ struct CustomWorkoutView: View {
         }
     }
     
+    /// Function to remove an added exercise from workout
     func deleteExercise(_ exercise: Binding<ExercisePerformed>) {
         if let index = exe.firstIndex(where: { $0.id == exercise.id }) {
             exe.remove(at: index)
@@ -216,8 +232,9 @@ struct CustomWorkoutView: View {
     
 }
 
-
+/// View to re-order the exercises
 struct ReOrderExercise: View {
+    /// Binding Array of exercises performed
     @Binding var exe: [ExercisePerformed]
     
     var body: some View{
@@ -239,21 +256,34 @@ struct ReOrderExercise: View {
     }
 }
 
+
+/// View to display each exercise
 struct ShowExercise: View{
+    /// ``ExercisePerformed`` variable
     @Binding var exercise : ExercisePerformed
     @Environment(\.managedObjectContext) var moc
     @Environment(\.colorScheme) var colorScheme
     
+    /// Header for weight field
     @State var weightHeader = ""
-    @State var repsHeader = "Reps"
+    /// Header for reps field
+    @State var repsHeader = ""
     
+    ///State var to show ``ExerciseDetailsView``
     @State var popUp = false
+    
+    /// Variable to edit ``ExercisePerformed/sets``
     @State var edit: Bool = false
+    
+    /// Variables to show alerts for different situations
     @State private var showAlert1 = false
     @State private var showAlert2 = false
     @State private var showAlert3 = false
     
+    /// Array to store sets performed
     @State var sets : [Set] = []
+
+    /// Refer to ``CustomWorkoutView/selectedUnit``
     @AppStorage("defaultUnits") var selectedUnit: units = .kg
 
     var body: some View{
@@ -327,7 +357,6 @@ struct ShowExercise: View{
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(colorScheme == .dark ? .white : .black)
                 )
-//                Divider()
             }
                         if sets.count > 0{
 
@@ -352,7 +381,6 @@ struct ShowExercise: View{
                                             .disabled(sets[i].reps == 0)
                                         }
                                     }
-//                                    Divider()
                                     .padding()
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 20)
@@ -396,28 +424,35 @@ struct ShowExercise: View{
     }
 
 
+/// View for each ``Set``
 struct AddSetView: View{
+    
+    /// ``Set`` Variable
     @Binding var set : Set
+    
+    /// Index of the set
     var index: Int
+    
+    /// Variable to edit set
     @Binding var edit: Bool
 
+    /// Formatter to format the weight entered by user
     let weightFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.minimumFractionDigits = 1 // Adjust as needed
             return formatter
         }()
+    
+    /// Formatter to format the number of reps entered by user
     let repsFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
-//            formatter.numberStyle = .decimal
-//            formatter.minimumFractionDigits = 1 // Adjust as needed
             return formatter
         }()
 
     var body: some View{
 
         VStack{
-//            Divider()
             HStack {
                 Text("\(index+1).")
                     .bold()
@@ -432,8 +467,6 @@ struct AddSetView: View{
                     .disabled(edit)
                     .bold()
             }
-            //            .padding()
-            //            Divider()
         }
     }
 }
@@ -441,6 +474,7 @@ struct AddSetView: View{
 
 #if canImport(UIKit)
 extension View {
+    /// Function to disable keyboard
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }

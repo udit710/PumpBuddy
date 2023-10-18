@@ -8,24 +8,36 @@
 import SwiftUI
 
 struct CreatePresetWorkout: View {
-    @Environment(\.colorScheme) var colorScheme
+    /// Environment variable for CoreData operations
     @Environment(\.managedObjectContext) var moc
     
+    /// Environment variable to get background mode
+    @Environment(\.colorScheme) var colorScheme
+    
+    /// Fetch ``PresetWorkout`` data from CoreData
     @FetchRequest(entity: PresetWorkout.entity(), sortDescriptors: []) var works: FetchedResults<PresetWorkout>
     
+    ///Title of the workout
     @State var workoutTitle: String = ""
+    
+    ///Any notes for the workout
     @State var workoutNotes: String = ""
     
+    /// If workout is favourite
     @State private var isFavourite: Bool = false
     
+    /// If preset workout is saved
     @State var isWorkoutAdded = false
+    
+    /// Alert if workout is already saved
     @State private var showAlert = false
     
+    /// State var to re-order exercises
     @State private var reOrder = false
 
     
     
-    // Array to temporarily store exercises performed
+    /// Array to temporarily store ``ExercisePerformed`` objects
     @State var exe : [ExercisePerformed] = []
     
     
@@ -154,15 +166,6 @@ struct CreatePresetWorkout: View {
                                 .padding(.leading, 5.0)
                         }
                         .disabled(isWorkoutAdded)
-//                        .onTapGesture {
-//                            if isWorkoutAdded{
-//                                Alert(title: Text("Already Added!"))
-//                            } else if exe.isEmpty{
-//                                Alert(title: Text("Kindly add exercises!"))
-//                            } else if workoutTitle.isEmpty{
-//                                Alert(title: Text("Workout title missing"))
-//                            }
-//                        }
                     }
                 }
                 .alert(isPresented: $showAlert) {
@@ -195,6 +198,9 @@ struct CreatePresetWorkout: View {
         }
     }
     
+    
+    /// Function to remove exercise from ``exe``
+    /// - Parameter exercise: ``ExercisePerformed`` Object that is to be removed
     func deleteExercise(_ exercise: Binding<ExercisePerformed>) {
         if let index = exe.firstIndex(where: { $0.id == exercise.id }) {
             exe.remove(at: index)
@@ -204,10 +210,16 @@ struct CreatePresetWorkout: View {
     
 }
 
+
+/// View to display added exercise
 struct SavedExercise: View{
+    
+    /// Binding Exercise to be displayed
     @Binding var exercise : ExercisePerformed
     @Environment(\.managedObjectContext) var moc
     @Environment(\.colorScheme) var colorScheme
+    
+    /// State variable to display exercise details
     @State var popUp = false
     
     var body: some View{
@@ -228,15 +240,6 @@ struct SavedExercise: View{
                     Spacer()
                 }
                 Spacer()
-                //                Button(exercise.isDone ? "Added!" : "Done"){
-                //                    let setsArray: NSSet = NSSet(array: sets)
-                //                    exercise.sets = setsArray
-                //
-                //                    try? moc.save()
-                //
-                //                    exercise.isDone = true
-                //                }
-                //                .disabled(sets.count == 0 || !sets.allSatisfy { $0.isDone } || exercise.isDone)
             }
             .padding(.all)
             .frame(maxWidth: .infinity)

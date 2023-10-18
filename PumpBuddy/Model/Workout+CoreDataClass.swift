@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-
+/// Workout Performed by the user
 public class Workout: NSManagedObject {
 
 }

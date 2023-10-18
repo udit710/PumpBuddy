@@ -12,21 +12,26 @@ import CoreData
 
 extension ExercisePerformed {
 
+    /// Request to fetch **ExercisePerformed** Data from CoreData
+    /// - Returns: ExercisePerformed data
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ExercisePerformed> {
         return NSFetchRequest<ExercisePerformed>(entityName: "ExercisePerformed")
     }
 
+    /// Unique ID of the Exercise Performed
     @NSManaged public var id: UUID?
-    @NSManaged public var exercise: Exercise?
-    @NSManaged public var workout: Workout?
-    @NSManaged public var isDone: Bool
-    @NSManaged public var sets: NSSet?
     
-//    public var setsArray: [Set] {
-//        let array = sets as? Set<Set> ?? []
-//        
-//        return array
-//    }
+    /// The ``Exercise`` object fetched from the **API** call
+    @NSManaged public var exercise: Exercise?
+    
+    /// The ``Workout`` where this exercise is performed
+    @NSManaged public var workout: Workout?
+    
+    /// Variable to check if this ``ExercisePerformed`` is complete
+    @NSManaged public var isDone: Bool
+    
+    /// An array of sets having ``Set`` data about the exercise performed
+    @NSManaged public var sets: NSSet?
 
 }
 
